@@ -1,0 +1,15 @@
+
+   {{#relations}}
+  import {{TableNameRefModel}} from '' 
+    {{/relations}}
+  export interface {{modelName}} {
+    {{#properties}}
+    {{nameCamelCase}}?:{{type}}
+    {{/properties}}
+    {{#relations}}
+    {{targetTableNameRef}}: {{TableNameRefModel}};
+    {{/relations}}
+};
+
+
+

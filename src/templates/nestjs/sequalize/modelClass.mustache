@@ -1,0 +1,24 @@
+
+  export class {{modelName}} {
+    {{#properties}}
+    {{nameCamelCase}}?:{{type}}
+    {{/properties}}
+    constructor(
+      {
+        {{#properties}}
+        {{nameCamelCase}},
+        {{/properties}}
+      }:{
+        {{#properties}}
+        {{nameCamelCase}}?:{{type}},
+        {{/properties}}
+      }
+    ){
+       {{#properties}}
+        this.{{nameCamelCase}}={{nameCamelCase}}
+      {{/properties}}
+    }
+};
+
+
+

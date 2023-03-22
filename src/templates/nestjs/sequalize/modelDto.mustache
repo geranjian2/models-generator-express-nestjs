@@ -1,0 +1,35 @@
+
+  import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+   {{#relations}}
+  import { {{TableNameRefEntity}} } from ''
+    {{/relations}}
+  import { {{modelName}} } from ''
+  export class {{tableClass}}Dto {
+    constructor(
+      register: {{modelName}}
+    ){
+       {{#properties}}
+        this.{{nameCamelCase}}=register.{{nameCamelCase}}
+      {{/properties}}
+      {{#relations}}
+         this.{{targetTableNameRef}}= register.{{TableNameRefEntity}}
+    {{/relations}}
+    }
+  {{#properties}}
+    {{#primary}}
+      @ApiPropertyOptional()
+      {{name}}?: {{type}};
+    {{/primary}}
+    {{^primary}}
+      @ApiProperty()
+      {{nameCamelCase}}?: {{type}};
+    {{/primary}}
+  {{/properties}}
+   {{#relations}}
+      @ApiProperty()
+      {{targetTableNameRef}}: {{TableNameRefEntity}};
+    {{/relations}}
+};
+
+
+

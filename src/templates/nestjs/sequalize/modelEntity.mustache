@@ -1,0 +1,85 @@
+import {
+  BelongsTo,
+  Column,
+  CreatedAt,
+  DataType,
+  DeletedAt,
+  ForeignKey,
+  Model,
+  Table,
+  UpdatedAt,
+  HasMany,
+} from 'sequelize-typescript';
+{{#relations}}
+    import { {{TableNameRefEntity}} } from '';
+{{/relations}}
+
+{{#foreignsRelations}}
+   import { {{targetEntity}} } from '';
+{{/foreignsRelations}}
+
+
+
+@Table({ modelName: '{{table}}' })
+export class {{EnityName}} extends Model<{{EnityName}}> {
+    {{#properties}}
+        {{^primary}}
+         {{#foreign}}
+          @ForeignKey(() => {{tableForeign}})
+          @Column
+          {{nameCamelCase}}: {{type}};
+
+         {{/foreign}}
+         {{^foreign}}
+         {{#created_at}}
+          @CreatedAt
+          @Column
+         {{/created_at}}
+         {{#updated_at}}
+          @UpdatedAt
+          @Column
+         {{/updated_at}}
+         {{#deleted_at}}
+          @DeletedAt
+          @Column
+         {{/deleted_at}}
+         {{#isTypeString}}
+         @Column({
+            type: DataType.STRING({{length}}),
+            allowNull: {{is_nullable}},
+         })
+         {{/isTypeString}}
+         {{#isTypeText}}
+         @Column({
+            type: DataType.TEXT,
+            allowNull: {{is_nullable}},
+         })
+         {{/isTypeText}}
+         {{#isTypeInteger}}
+         @Column({
+            type: DataType.INTEGER,
+            allowNull: {{is_nullable}},
+         })
+         {{/isTypeInteger}}
+         {{#isTypeBoolean}}
+         @Column({
+            type: DataType.BOOLEAN,
+            allowNull: {{is_nullable}},
+         })
+         {{/isTypeBoolean}}
+          {{nameCamelCase}}: {{type}};
+          
+         {{/foreign}}
+        {{/primary}}
+    {{/properties}}
+    {{#relations}}
+         @BelongsTo(() => {{TableNameRefEntity}})
+         {{targetTableNameRef}}: {{TableNameRefEntity}};
+         
+    {{/relations}}
+    {{#foreignsRelations}}
+         @HasMany(() => {{targetEntity}})
+         {{name}}?: {{targetEntity}}[];
+
+    {{/foreignsRelations}}
+}

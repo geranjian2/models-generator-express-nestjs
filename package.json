@@ -1,16 +1,21 @@
 {
   "name": "models-generator-express-nestjs",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node main.js",
+    "options": "bash options.sh"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "knex": "^2.4.2",
     "knox": "^0.9.2",
-    "pg": "^8.10.0"
+    "mustache": "^4.2.0",
+    "pg": "^8.10.0",
+    "pluralize": "^8.0.0"
   }
 }
