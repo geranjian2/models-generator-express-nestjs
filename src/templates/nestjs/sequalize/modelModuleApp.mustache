@@ -1,0 +1,23 @@
+import { Module } from '@nestjs/common';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+import { DatabaseModule } from './database/database.module';
+
+
+{{#tables}}
+import { {{tableClass}}Module } from './modules/{{tablePluralize}}/{{tablePluralize}}.module';
+{{/tables}}
+
+
+@Module({
+  imports: [DatabaseModule,
+   {{#tables}}
+        {{tableClass}}Module,
+    {{/tables}}
+   ],
+  controllers: [AppController],
+  providers: [AppService],
+})
+export class AppModule {}
+
+    

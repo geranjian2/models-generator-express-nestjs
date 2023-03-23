@@ -1,4 +1,5 @@
 const fs = require('fs');
+const { exec } = require("child_process");
 const path = require('path');
 const Mustache = require('mustache');
 const pluralize = require('pluralize');
@@ -15,6 +16,7 @@ module.exports = async(dbName, dbConnection,  outputModelFile) => {
     let templateQuery = fs.readFileSync(path.join(__dirname, 'templates/nestjs/sequalize/modelQuery.mustache'), 'UTF-8');
     let templateInterface = fs.readFileSync(path.join(__dirname, 'templates/interfaces/modelInterface.mustache'), 'UTF-8');
     let templateModule = fs.readFileSync(path.join(__dirname, 'templates/nestjs/sequalize/modelModule.mustache'), 'UTF-8');
+    let templateModuleApp = fs.readFileSync(path.join(__dirname, 'templates/nestjs/sequalize/modelModuleApp.mustache'), 'UTF-8');
     let templatePostman = fs.readFileSync(path.join(__dirname, 'templates/rest/modelJsonPostman.mustache'), 'UTF-8');
 
 
@@ -25,23 +27,12 @@ module.exports = async(dbName, dbConnection,  outputModelFile) => {
     };
     
     arrayTables['tables'].forEach((table, index) => {
-        
-        let position = table.table.search("_");
-        if(position!=-1){
-            var words = table.table.split('_');
-            let array = words.map((w)=>{
-                return pluralize.plural(w)
-            })
-            array.join('-')
-        }else{
-
-        }
-
         let modelName = singularize(table.table);
         modelName = camelCase(modelName);
         modelName = capitalize(modelName);
         middleDashName = singularize(middleDash(table.table));
         tableInitial = getInitials(table.table);
+        tablePluralize = pluralize.plural(middleDashName)
         let data = {
             table: table.table,
             tableClass:modelName,
@@ -49,6 +40,7 @@ module.exports = async(dbName, dbConnection,  outputModelFile) => {
             EnityName: modelName + 'Entity',
             middleDashName,
             tableInitial,
+            tablePluralize,
             properties: table.columns.map(column => {
                 
                 let is_nullable = true
@@ -169,15 +161,15 @@ module.exports = async(dbName, dbConnection,  outputModelFile) => {
             })
         }
         classModelNames.classes.push(data);
-     })
-    //  console.log(classModelNames.classes[6]);
-    //  process.exit()
+     });
+     console.log(classModelNames.classes[0])
+    fs.rmSync(outputModelFile, { recursive: true, force: true });
 
      let folders=['models','entities','dtos','controllers','services','query', 'interface', 'module', 'rest']
      classModelNames.classes.forEach( async classTable => {
         folders.forEach(async (folder)=>{
-            if (!fs.existsSync(`${outputModelFile}/${classTable.table}/${folder}`)){
-                await fs.mkdirSync(`${outputModelFile}/${classTable.table}/${folder}`, { recursive: true });
+            if (!fs.existsSync(`${outputModelFile}/${classTable.tablePluralize}/${folder}`)){
+                await fs.mkdirSync(`${outputModelFile}/${classTable.tablePluralize}/${folder}`, { recursive: true });
             }
         })
       let models = await Mustache.render(templateModel, classTable);
@@ -189,16 +181,17 @@ module.exports = async(dbName, dbConnection,  outputModelFile) => {
       let interface = await Mustache.render(templateInterface, classTable);
       let module = await Mustache.render(templateModule, classTable);
       let rest = await Mustache.render(templatePostman, classTable);
-       fs.writeFileSync(`${outputModelFile}/${classTable.table}/${folders[0]}/${classTable.middleDashName}.model.ts`, models);
-       fs.writeFileSync(`${outputModelFile}/${classTable.table}/${folders[1]}/${classTable.middleDashName}.entity.ts`, entities);
-       fs.writeFileSync(`${outputModelFile}/${classTable.table}/${folders[2]}/${classTable.middleDashName}.dto.ts`, dtos);
-       fs.writeFileSync(`${outputModelFile}/${classTable.table}/${folders[3]}/${classTable.middleDashName}.controller.ts`, controller);
-       fs.writeFileSync(`${outputModelFile}/${classTable.table}/${folders[4]}/${classTable.middleDashName}.service.ts`, service);
-       fs.writeFileSync(`${outputModelFile}/${classTable.table}/${folders[5]}/${classTable.middleDashName}.query.ts`, query);
-       fs.writeFileSync(`${outputModelFile}/${classTable.table}/${folders[6]}/${classTable.middleDashName}.interface.ts`, interface);
-       fs.writeFileSync(`${outputModelFile}/${classTable.table}/${folders[7]}/${classTable.middleDashName}.module.ts`, module);
-       fs.writeFileSync(`${outputModelFile}/${classTable.table}/${folders[8]}/${classTable.middleDashName}.json`, rest);
+       fs.writeFileSync(`${outputModelFile}/${classTable.tablePluralize}/${folders[0]}/${classTable.tablePluralize}.model.ts`, models);
+       fs.writeFileSync(`${outputModelFile}/${classTable.tablePluralize}/${folders[1]}/${classTable.tablePluralize}.entity.ts`, entities);
+       fs.writeFileSync(`${outputModelFile}/${classTable.tablePluralize}/${folders[2]}/${classTable.tablePluralize}.dto.ts`, dtos);
+       fs.writeFileSync(`${outputModelFile}/${classTable.tablePluralize}/${folders[3]}/${classTable.tablePluralize}.controller.ts`, controller);
+       fs.writeFileSync(`${outputModelFile}/${classTable.tablePluralize}/${folders[4]}/${classTable.tablePluralize}.service.ts`, service);
+       fs.writeFileSync(`${outputModelFile}/${classTable.tablePluralize}/${folders[5]}/${classTable.tablePluralize}.query.ts`, query);
+       fs.writeFileSync(`${outputModelFile}/${classTable.tablePluralize}/${folders[6]}/${classTable.tablePluralize}.interface.ts`, interface);
+       fs.writeFileSync(`${outputModelFile}/${classTable.tablePluralize}/${folders[7]}/${classTable.tablePluralize}.module.ts`, module);
+       fs.writeFileSync(`${outputModelFile}/${classTable.tablePluralize}/${folders[8]}/${classTable.tablePluralize}.json`, rest);
     })
-
+    let moduleApp = await Mustache.render(templateModuleApp, {tables:classModelNames.classes});
+    fs.writeFileSync(`${outputModelFile}/module.app.ts`, moduleApp);
     return true;
 }
