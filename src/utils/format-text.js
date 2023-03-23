@@ -20,11 +20,15 @@ const camelCase = (word) => word.toLowerCase()
 const middleDash = (word) => word.toLowerCase()
     .replace('_','-');
 
+const addSpace = (word) => word.toLowerCase()
+    .replace('_',' ');
+
 
     module.exports = {
         getInitials,
         singularize,
         capitalize,
         camelCase,
-        middleDash
+        middleDash,
+        addSpace
     }

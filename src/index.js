@@ -1,9 +1,10 @@
 const fs = require('fs');
 const path = require('path');
 const Mustache = require('mustache');
+const pluralize = require('pluralize');
 const {pgAdmin} = require('./databases/pg')
 const {dataTypes} = require('./utils/types')
-const {getInitials, singularize, capitalize, camelCase, middleDash } = require('./utils/format-text')
+const {getInitials, singularize, capitalize, camelCase, middleDash, addSpace } = require('./utils/format-text')
 module.exports = async(dbName, dbConnection,  outputModelFile) => {
 
     let templateEntity = fs.readFileSync(path.join(__dirname, 'templates/nestjs/sequalize/modelEntity.mustache'), 'UTF-8');
@@ -14,6 +15,7 @@ module.exports = async(dbName, dbConnection,  outputModelFile) => {
     let templateQuery = fs.readFileSync(path.join(__dirname, 'templates/nestjs/sequalize/modelQuery.mustache'), 'UTF-8');
     let templateInterface = fs.readFileSync(path.join(__dirname, 'templates/interfaces/modelInterface.mustache'), 'UTF-8');
     let templateModule = fs.readFileSync(path.join(__dirname, 'templates/nestjs/sequalize/modelModule.mustache'), 'UTF-8');
+    let templatePostman = fs.readFileSync(path.join(__dirname, 'templates/rest/modelJsonPostman.mustache'), 'UTF-8');
 
 
     let arrayTables = await pgAdmin(dbName,dbConnection)
@@ -24,6 +26,17 @@ module.exports = async(dbName, dbConnection,  outputModelFile) => {
     
     arrayTables['tables'].forEach((table, index) => {
         
+        let position = table.table.search("_");
+        if(position!=-1){
+            var words = table.table.split('_');
+            let array = words.map((w)=>{
+                return pluralize.plural(w)
+            })
+            array.join('-')
+        }else{
+
+        }
+
         let modelName = singularize(table.table);
         modelName = camelCase(modelName);
         modelName = capitalize(modelName);
@@ -38,9 +51,9 @@ module.exports = async(dbName, dbConnection,  outputModelFile) => {
             tableInitial,
             properties: table.columns.map(column => {
                 
-                let is_nullable = false
+                let is_nullable = true
                 if (column.is_nullable === 'NO' ) {
-                    is_nullable = true
+                    is_nullable = false
                 }
                 let type = dataTypes(column.data_type);
                 let isTypeString=false
@@ -160,7 +173,7 @@ module.exports = async(dbName, dbConnection,  outputModelFile) => {
     //  console.log(classModelNames.classes[6]);
     //  process.exit()
 
-     let folders=['models','entities','dtos','controllers','services','query', 'interface', 'module']
+     let folders=['models','entities','dtos','controllers','services','query', 'interface', 'module', 'rest']
      classModelNames.classes.forEach( async classTable => {
         folders.forEach(async (folder)=>{
             if (!fs.existsSync(`${outputModelFile}/${classTable.table}/${folder}`)){
@@ -175,6 +188,7 @@ module.exports = async(dbName, dbConnection,  outputModelFile) => {
       let query = await Mustache.render(templateQuery, classTable);
       let interface = await Mustache.render(templateInterface, classTable);
       let module = await Mustache.render(templateModule, classTable);
+      let rest = await Mustache.render(templatePostman, classTable);
        fs.writeFileSync(`${outputModelFile}/${classTable.table}/${folders[0]}/${classTable.middleDashName}.model.ts`, models);
        fs.writeFileSync(`${outputModelFile}/${classTable.table}/${folders[1]}/${classTable.middleDashName}.entity.ts`, entities);
        fs.writeFileSync(`${outputModelFile}/${classTable.table}/${folders[2]}/${classTable.middleDashName}.dto.ts`, dtos);
@@ -183,6 +197,7 @@ module.exports = async(dbName, dbConnection,  outputModelFile) => {
        fs.writeFileSync(`${outputModelFile}/${classTable.table}/${folders[5]}/${classTable.middleDashName}.query.ts`, query);
        fs.writeFileSync(`${outputModelFile}/${classTable.table}/${folders[6]}/${classTable.middleDashName}.interface.ts`, interface);
        fs.writeFileSync(`${outputModelFile}/${classTable.table}/${folders[7]}/${classTable.middleDashName}.module.ts`, module);
+       fs.writeFileSync(`${outputModelFile}/${classTable.table}/${folders[8]}/${classTable.middleDashName}.json`, rest);
     })
 
     return true;

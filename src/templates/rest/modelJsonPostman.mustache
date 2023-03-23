@@ -1,0 +1,47 @@
+
+//data get All
+localhost:3000/{{middleDashName}}
+
+//data for get id
+localhost:3000/{{middleDashName}}/:id
+
+//data save  post
+localhost:3000/{{middleDashName}} 
+{
+    {{#properties}}
+    {{^primary}}
+    {{#is_nullable}}
+    "{{nameCamelCase}}":"{{type}}:required",
+    {{/is_nullable}}
+    {{^is_nullable}}
+    "{{nameCamelCase}}":"{{type}}",
+    {{/is_nullable}}
+    {{/primary}}
+    {{/properties}}
+    {{#relations}}
+    "{{targetTableNameRef}}": "{{TableNameRefModel}}",
+    {{/relations}}
+}
+
+//data save  put
+localhost:3000/{{middleDashName}}/:id 
+{
+    {{#properties}}
+    {{^primary}}
+    {{#is_nullable}}
+    "{{nameCamelCase}}":"{{type}}:required",
+    {{/is_nullable}}
+    {{^is_nullable}}
+    "{{nameCamelCase}}":"{{type}}",
+    {{/is_nullable}}
+    {{/primary}}
+    {{/properties}}
+    {{#relations}}
+    "{{targetTableNameRef}}": "{{TableNameRefModel}}",
+    {{/relations}}
+}
+
+//data for delete
+localhost:3000/{{middleDashName}}/:id
+
+
