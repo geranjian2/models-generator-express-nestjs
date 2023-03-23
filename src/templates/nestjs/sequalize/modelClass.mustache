@@ -1,8 +1,14 @@
 
+   {{#foreignsRelations}}
+    import { {{targetModel}} } from ''
+   {{/foreignsRelations}}
   export class {{modelName}} {
     {{#properties}}
     {{nameCamelCase}}?:{{type}}
     {{/properties}}
+    {{#foreignsRelations}}
+    {{namePluralize}}?: {{targetModel}}[];
+    {{/foreignsRelations}}
     constructor(
       {
         {{#properties}}

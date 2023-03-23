@@ -48,20 +48,21 @@ module.exports = async(dbName, dbConnection,  outputModelFile) => {
                     is_nullable = false
                 }
                 let type = dataTypes(column.data_type);
+                console.log(type);
                 let isTypeString=false
                 let isTypeText=false
                 let isTypeInteger=false
                 let isTypeBoolean=false
-                if (column.data_type === 'varchar') {
+                if (type === 'string') {
                     isTypeString=true
                 }
-                if (column.data_type === 'boolean') {
+                if (type === 'boolean') {
                     isTypeBoolean=true
                 }
-                if (column.data_type === 'text') {
+                if (type === 'text') {
                     isTypeText=true
                 }
-                if (column.data_type === 'integer') {
+                if (type === 'number') {
                     isTypeInteger=true
                 }
                 let primary = false;
@@ -122,6 +123,7 @@ module.exports = async(dbName, dbConnection,  outputModelFile) => {
                 referenceTableName = camelCase(referenceTableName);
                 return {
                     name: targetTableName,
+                    namePluralize: pluralize.plural(column.table_name),
                     column: column.column_name,
                     columnModel: referenceColumName,
                     targetClass: capitalize(targetTableName), 
@@ -147,6 +149,7 @@ module.exports = async(dbName, dbConnection,  outputModelFile) => {
                 referenceTableName = camelCase(referenceTableName);
                 return {
                     name: targetTableName,
+                    namePluralize: pluralize.plural(column.table_name),
                     column: column.column_name,
                     columnModel: referenceColumName,
                     targetModel: capitalize(targetTableName) + 'Model',
@@ -162,7 +165,7 @@ module.exports = async(dbName, dbConnection,  outputModelFile) => {
         }
         classModelNames.classes.push(data);
      });
-     console.log(classModelNames.classes[0])
+     console.log(classModelNames.classes[2])
     fs.rmSync(outputModelFile, { recursive: true, force: true });
 
      let folders=['models','entities','dtos','controllers','services','query', 'interface', 'module', 'rest']

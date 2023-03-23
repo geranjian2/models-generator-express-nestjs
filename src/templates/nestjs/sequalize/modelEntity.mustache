@@ -23,38 +23,47 @@ import {
 @Table({ modelName: '{{table}}' })
 export class {{EnityName}} extends Model<{{EnityName}}> {
     {{#properties}}
+        {{!is not primary }}
         {{^primary}}
+        {{!is foreign }}
          {{#foreign}}
           @ForeignKey(() => {{tableForeign}})
           @Column
           {{nameCamelCase}}: {{type}};
 
          {{/foreign}}
+         {{!is not foreign }}
          {{^foreign}}
+         {{!is created_at }}
          {{#created_at}}
           @CreatedAt
           @Column
          {{/created_at}}
+         {{!is updated_at }}
          {{#updated_at}}
           @UpdatedAt
           @Column
          {{/updated_at}}
+         {{!is deleted_at }}
          {{#deleted_at}}
           @DeletedAt
           @Column
          {{/deleted_at}}
+         {{!is string }}
          {{#isTypeString}}
          @Column({
             type: DataType.STRING({{length}}),
             allowNull: {{is_nullable}},
          })
          {{/isTypeString}}
+         {{!is text }}
          {{#isTypeText}}
          @Column({
             type: DataType.TEXT,
             allowNull: {{is_nullable}},
          })
          {{/isTypeText}}
+         {{!is integer }}
          {{#isTypeInteger}}
          @Column({
             type: DataType.INTEGER,
@@ -79,7 +88,7 @@ export class {{EnityName}} extends Model<{{EnityName}}> {
     {{/relations}}
     {{#foreignsRelations}}
          @HasMany(() => {{targetEntity}})
-         {{name}}?: {{targetEntity}}[];
+         {{namePluralize}}?: {{targetEntity}}[];
 
     {{/foreignsRelations}}
 }

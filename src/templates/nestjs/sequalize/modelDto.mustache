@@ -1,8 +1,8 @@
 
   import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-   {{#relations}}
-  import { {{TableNameRefEntity}} } from ''
-    {{/relations}}
+    {{#foreignsRelations}}
+      import { {{targetModel}} } from ''
+    {{/foreignsRelations}}
   import { {{modelName}} } from ''
   export class {{tableClass}}Dto {
     constructor(
@@ -13,7 +13,10 @@
       {{/properties}}
       {{#relations}}
          this.{{targetTableNameRef}}= register.{{TableNameRefEntity}}
-    {{/relations}}
+      {{/relations}}
+      {{#foreignsRelations}}
+        this.{{namePluralize}} = register.{{namePluralize}}
+      {{/foreignsRelations}}
     }
   {{#properties}}
     {{#primary}}
@@ -29,6 +32,10 @@
       @ApiProperty()
       {{targetTableNameRef}}: {{TableNameRefEntity}};
     {{/relations}}
+     {{#foreignsRelations}}
+      @ApiProperty()
+      {{namePluralize}}?: {{targetModel}}[];
+    {{/foreignsRelations}}
 };
 
 
