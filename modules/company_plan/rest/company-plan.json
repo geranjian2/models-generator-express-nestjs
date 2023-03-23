@@ -1,0 +1,35 @@
+
+//data get All
+localhost:3000/company-plan
+
+//data for get id
+localhost:3000/company-plan/:id
+
+//data save  post
+localhost:3000/company-plan 
+{
+    "companyId":"number",
+    "planId":"number",
+    "createdAt":"Date:required",
+    "updatedAt":"Date:required",
+    "deletedAt":"Date:required",
+    "company": "CompanyModel",
+    "plan": "PlanModel",
+}
+
+//data save  put
+localhost:3000/company-plan/:id 
+{
+    "companyId":"number",
+    "planId":"number",
+    "createdAt":"Date:required",
+    "updatedAt":"Date:required",
+    "deletedAt":"Date:required",
+    "company": "CompanyModel",
+    "plan": "PlanModel",
+}
+
+//data for delete
+localhost:3000/company-plan/:id
+
+

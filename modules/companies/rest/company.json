@@ -1,0 +1,89 @@
+
+//data get All
+localhost:3000/company
+
+//data for get id
+localhost:3000/company/:id
+
+//data save  post
+localhost:3000/company 
+{
+    "uuid":"string",
+    "typeDocumentId":"number:required",
+    "document":"string:required",
+    "dv":"number:required",
+    "businessName":"string:required",
+    "countryId":"number:required",
+    "departmentId":"number:required",
+    "cityId":"number:required",
+    "address":"string:required",
+    "emailNotification":"string",
+    "emailInvoice":"string",
+    "indicativeContact":"string",
+    "phoneContact":"string",
+    "firstNameRl":"string",
+    "lastNameRl":"string",
+    "typeDocumentRlId":"number:required",
+    "documentRl":"string:required",
+    "indicativeRl":"string",
+    "phoneRl":"string",
+    "logo":"string",
+    "acceptTerms":"boolean:required",
+    "chamberCommerceImage":"string",
+    "rut":"string",
+    "commercialContract":"string",
+    "status":"string",
+    "emailRegister":"string",
+    "createdAt":"Date:required",
+    "updatedAt":"Date:required",
+    "deletedAt":"Date:required",
+    "uploadedAt":"Date:required",
+    "city": "CityModel",
+    "country": "CountryModel",
+    "department": "DepartmentModel",
+    "typeDocument": "TypeDocumentModel",
+}
+
+//data save  put
+localhost:3000/company/:id 
+{
+    "uuid":"string",
+    "typeDocumentId":"number:required",
+    "document":"string:required",
+    "dv":"number:required",
+    "businessName":"string:required",
+    "countryId":"number:required",
+    "departmentId":"number:required",
+    "cityId":"number:required",
+    "address":"string:required",
+    "emailNotification":"string",
+    "emailInvoice":"string",
+    "indicativeContact":"string",
+    "phoneContact":"string",
+    "firstNameRl":"string",
+    "lastNameRl":"string",
+    "typeDocumentRlId":"number:required",
+    "documentRl":"string:required",
+    "indicativeRl":"string",
+    "phoneRl":"string",
+    "logo":"string",
+    "acceptTerms":"boolean:required",
+    "chamberCommerceImage":"string",
+    "rut":"string",
+    "commercialContract":"string",
+    "status":"string",
+    "emailRegister":"string",
+    "createdAt":"Date:required",
+    "updatedAt":"Date:required",
+    "deletedAt":"Date:required",
+    "uploadedAt":"Date:required",
+    "city": "CityModel",
+    "country": "CountryModel",
+    "department": "DepartmentModel",
+    "typeDocument": "TypeDocumentModel",
+}
+
+//data for delete
+localhost:3000/company/:id
+
+

@@ -1,0 +1,47 @@
+
+//data get All
+localhost:3000/transaction-detail
+
+//data for get id
+localhost:3000/transaction-detail/:id
+
+//data save  post
+localhost:3000/transaction-detail 
+{
+    "uuid":"string",
+    "transactionId":"number:required",
+    "voucherId":"number:required",
+    "document":"string",
+    "invoiceNumber":"string",
+    "invoiceExpiration":"Date:required",
+    "value":"string",
+    "status":"string",
+    "createdAt":"Date:required",
+    "updatedAt":"Date:required",
+    "deletedAt":"Date:required",
+    "transaction": "TransactionModel",
+    "voucher": "VoucherModel",
+}
+
+//data save  put
+localhost:3000/transaction-detail/:id 
+{
+    "uuid":"string",
+    "transactionId":"number:required",
+    "voucherId":"number:required",
+    "document":"string",
+    "invoiceNumber":"string",
+    "invoiceExpiration":"Date:required",
+    "value":"string",
+    "status":"string",
+    "createdAt":"Date:required",
+    "updatedAt":"Date:required",
+    "deletedAt":"Date:required",
+    "transaction": "TransactionModel",
+    "voucher": "VoucherModel",
+}
+
+//data for delete
+localhost:3000/transaction-detail/:id
+
+

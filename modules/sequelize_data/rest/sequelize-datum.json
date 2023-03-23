@@ -1,0 +1,23 @@
+
+//data get All
+localhost:3000/sequelize-datum
+
+//data for get id
+localhost:3000/sequelize-datum/:id
+
+//data save  post
+localhost:3000/sequelize-datum 
+{
+    "name":"string",
+}
+
+//data save  put
+localhost:3000/sequelize-datum/:id 
+{
+    "name":"string",
+}
+
+//data for delete
+localhost:3000/sequelize-datum/:id
+
+

@@ -1,0 +1,33 @@
+
+//data get All
+localhost:3000/invoice-payment
+
+//data for get id
+localhost:3000/invoice-payment/:id
+
+//data save  post
+localhost:3000/invoice-payment 
+{
+    "billingId":"number",
+    "paymentAt":"Date:required",
+    "createdAt":"Date:required",
+    "updatedAt":"Date:required",
+    "deletedAt":"Date:required",
+    "billing": "BillingModel",
+}
+
+//data save  put
+localhost:3000/invoice-payment/:id 
+{
+    "billingId":"number",
+    "paymentAt":"Date:required",
+    "createdAt":"Date:required",
+    "updatedAt":"Date:required",
+    "deletedAt":"Date:required",
+    "billing": "BillingModel",
+}
+
+//data for delete
+localhost:3000/invoice-payment/:id
+
+

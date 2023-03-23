@@ -1,0 +1,39 @@
+
+//data get All
+localhost:3000/user
+
+//data for get id
+localhost:3000/user/:id
+
+//data save  post
+localhost:3000/user 
+{
+    "username":"string",
+    "roleId":"number",
+    "email":"string",
+    "password":"string",
+    "status":"string",
+    "createdAt":"Date:required",
+    "updatedAt":"Date:required",
+    "deletedAt":"Date:required",
+    "role": "RoleModel",
+}
+
+//data save  put
+localhost:3000/user/:id 
+{
+    "username":"string",
+    "roleId":"number",
+    "email":"string",
+    "password":"string",
+    "status":"string",
+    "createdAt":"Date:required",
+    "updatedAt":"Date:required",
+    "deletedAt":"Date:required",
+    "role": "RoleModel",
+}
+
+//data for delete
+localhost:3000/user/:id
+
+

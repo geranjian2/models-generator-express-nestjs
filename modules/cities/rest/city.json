@@ -1,0 +1,35 @@
+
+//data get All
+localhost:3000/city
+
+//data for get id
+localhost:3000/city/:id
+
+//data save  post
+localhost:3000/city 
+{
+    "code":"string",
+    "name":"string",
+    "departmentId":"number",
+    "createdAt":"Date:required",
+    "updatedAt":"Date:required",
+    "deletedAt":"Date:required",
+    "department": "DepartmentModel",
+}
+
+//data save  put
+localhost:3000/city/:id 
+{
+    "code":"string",
+    "name":"string",
+    "departmentId":"number",
+    "createdAt":"Date:required",
+    "updatedAt":"Date:required",
+    "deletedAt":"Date:required",
+    "department": "DepartmentModel",
+}
+
+//data for delete
+localhost:3000/city/:id
+
+

@@ -1,0 +1,41 @@
+
+//data get All
+localhost:3000/third-bank
+
+//data for get id
+localhost:3000/third-bank/:id
+
+//data save  post
+localhost:3000/third-bank 
+{
+    "thirdId":"number",
+    "bankId":"number:required",
+    "bankAccount":"string:required",
+    "accountTypeId":"number:required",
+    "createdAt":"Date:required",
+    "updatedAt":"Date:required",
+    "deletedAt":"Date:required",
+    "accountType": "AccountTypeModel",
+    "bank": "BankModel",
+    "third": "ThirdModel",
+}
+
+//data save  put
+localhost:3000/third-bank/:id 
+{
+    "thirdId":"number",
+    "bankId":"number:required",
+    "bankAccount":"string:required",
+    "accountTypeId":"number:required",
+    "createdAt":"Date:required",
+    "updatedAt":"Date:required",
+    "deletedAt":"Date:required",
+    "accountType": "AccountTypeModel",
+    "bank": "BankModel",
+    "third": "ThirdModel",
+}
+
+//data for delete
+localhost:3000/third-bank/:id
+
+

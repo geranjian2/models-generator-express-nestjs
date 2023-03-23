@@ -1,0 +1,29 @@
+
+//data get All
+localhost:3000/role-permission
+
+//data for get id
+localhost:3000/role-permission/:id
+
+//data save  post
+localhost:3000/role-permission 
+{
+    "roleId":"number",
+    "permissionId":"number",
+    "permission": "PermissionModel",
+    "role": "RoleModel",
+}
+
+//data save  put
+localhost:3000/role-permission/:id 
+{
+    "roleId":"number",
+    "permissionId":"number",
+    "permission": "PermissionModel",
+    "role": "RoleModel",
+}
+
+//data for delete
+localhost:3000/role-permission/:id
+
+

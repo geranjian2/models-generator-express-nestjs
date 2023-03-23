@@ -1,0 +1,57 @@
+
+//data get All
+localhost:3000/third
+
+//data for get id
+localhost:3000/third/:id
+
+//data save  post
+localhost:3000/third 
+{
+    "uuid":"string",
+    "companyId":"number",
+    "businessName":"string:required",
+    "typeDocumentId":"number:required",
+    "document":"string:required",
+    "dv":"number:required",
+    "emailNotification":"string",
+    "indicativeContact":"string",
+    "phoneContact":"string",
+    "categoryId":"number",
+    "thirdType":"string",
+    "status":"string",
+    "createdAt":"Date:required",
+    "updatedAt":"Date:required",
+    "deletedAt":"Date:required",
+    "thirdCategory": "ThirdCategoryModel",
+    "company": "CompanyModel",
+    "typeDocument": "TypeDocumentModel",
+}
+
+//data save  put
+localhost:3000/third/:id 
+{
+    "uuid":"string",
+    "companyId":"number",
+    "businessName":"string:required",
+    "typeDocumentId":"number:required",
+    "document":"string:required",
+    "dv":"number:required",
+    "emailNotification":"string",
+    "indicativeContact":"string",
+    "phoneContact":"string",
+    "categoryId":"number",
+    "thirdType":"string",
+    "status":"string",
+    "createdAt":"Date:required",
+    "updatedAt":"Date:required",
+    "deletedAt":"Date:required",
+    "thirdCategory": "ThirdCategoryModel",
+    "company": "CompanyModel",
+    "typeDocument": "TypeDocumentModel",
+}
+
+//data for delete
+localhost:3000/third/:id
+
+

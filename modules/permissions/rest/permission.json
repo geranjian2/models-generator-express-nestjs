@@ -1,0 +1,29 @@
+
+//data get All
+localhost:3000/permission
+
+//data for get id
+localhost:3000/permission/:id
+
+//data save  post
+localhost:3000/permission 
+{
+    "name":"string",
+    "description":"string",
+    "createdAt":"Date:required",
+    "updatedAt":"Date:required",
+}
+
+//data save  put
+localhost:3000/permission/:id 
+{
+    "name":"string",
+    "description":"string",
+    "createdAt":"Date:required",
+    "updatedAt":"Date:required",
+}
+
+//data for delete
+localhost:3000/permission/:id
+
+

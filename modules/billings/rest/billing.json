@@ -1,0 +1,39 @@
+
+//data get All
+localhost:3000/billing
+
+//data for get id
+localhost:3000/billing/:id
+
+//data save  post
+localhost:3000/billing 
+{
+    "numberBilling":"string:required",
+    "companyId":"number",
+    "valuePlan":"string",
+    "status":"string:required",
+    "dateBilling":"Date:required",
+    "createdAt":"Date:required",
+    "updatedAt":"Date:required",
+    "deletedAt":"Date:required",
+    "company": "CompanyModel",
+}
+
+//data save  put
+localhost:3000/billing/:id 
+{
+    "numberBilling":"string:required",
+    "companyId":"number",
+    "valuePlan":"string",
+    "status":"string:required",
+    "dateBilling":"Date:required",
+    "createdAt":"Date:required",
+    "updatedAt":"Date:required",
+    "deletedAt":"Date:required",
+    "company": "CompanyModel",
+}
+
+//data for delete
+localhost:3000/billing/:id
+
+

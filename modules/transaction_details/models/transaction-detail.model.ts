@@ -1,0 +1,60 @@
+
+  export class TransactionDetailModel {
+    id?:number
+    uuid?:string
+    transactionId?:number
+    voucherId?:number
+    document?:string
+    invoiceNumber?:string
+    invoiceExpiration?:Date
+    value?:string
+    status?:string
+    createdAt?:Date
+    updatedAt?:Date
+    deletedAt?:Date
+    constructor(
+      {
+        id,
+        uuid,
+        transactionId,
+        voucherId,
+        document,
+        invoiceNumber,
+        invoiceExpiration,
+        value,
+        status,
+        createdAt,
+        updatedAt,
+        deletedAt,
+      }:{
+        id?:number,
+        uuid?:string,
+        transactionId?:number,
+        voucherId?:number,
+        document?:string,
+        invoiceNumber?:string,
+        invoiceExpiration?:Date,
+        value?:string,
+        status?:string,
+        createdAt?:Date,
+        updatedAt?:Date,
+        deletedAt?:Date,
+      }
+    ){
+        this.id=id
+        this.uuid=uuid
+        this.transactionId=transactionId
+        this.voucherId=voucherId
+        this.document=document
+        this.invoiceNumber=invoiceNumber
+        this.invoiceExpiration=invoiceExpiration
+        this.value=value
+        this.status=status
+        this.createdAt=createdAt
+        this.updatedAt=updatedAt
+        this.deletedAt=deletedAt
+    }
+};
+
+
+

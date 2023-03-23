@@ -1,0 +1,39 @@
+
+//data get All
+localhost:3000/plan
+
+//data for get id
+localhost:3000/plan/:id
+
+//data save  post
+localhost:3000/plan 
+{
+    "name":"string:required",
+    "description":"string:required",
+    "dispersionsNumber":"number:required",
+    "value":"string",
+    "implementationFee":"string",
+    "status":"boolean",
+    "createdAt":"Date:required",
+    "updatedAt":"Date:required",
+    "deletedAt":"Date:required",
+}
+
+//data save  put
+localhost:3000/plan/:id 
+{
+    "name":"string:required",
+    "description":"string:required",
+    "dispersionsNumber":"number:required",
+    "value":"string",
+    "implementationFee":"string",
+    "status":"boolean",
+    "createdAt":"Date:required",
+    "updatedAt":"Date:required",
+    "deletedAt":"Date:required",
+}
+
+//data for delete
+localhost:3000/plan/:id
+
+

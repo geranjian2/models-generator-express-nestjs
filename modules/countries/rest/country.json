@@ -1,0 +1,31 @@
+
+//data get All
+localhost:3000/country
+
+//data for get id
+localhost:3000/country/:id
+
+//data save  post
+localhost:3000/country 
+{
+    "indicative":"string",
+    "name":"string",
+    "createdAt":"Date:required",
+    "updatedAt":"Date:required",
+    "deletedAt":"Date:required",
+}
+
+//data save  put
+localhost:3000/country/:id 
+{
+    "indicative":"string",
+    "name":"string",
+    "createdAt":"Date:required",
+    "updatedAt":"Date:required",
+    "deletedAt":"Date:required",
+}
+
+//data for delete
+localhost:3000/country/:id
+
+

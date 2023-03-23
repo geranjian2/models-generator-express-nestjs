@@ -1,0 +1,61 @@
+
+//data get All
+localhost:3000/team
+
+//data for get id
+localhost:3000/team/:id
+
+//data save  post
+localhost:3000/team 
+{
+    "roleId":"number",
+    "uuid":"string",
+    "email":"string",
+    "emailValidationCode":"string",
+    "emailValidation":"boolean",
+    "indicative":"string",
+    "phone":"string",
+    "phoneValidationCode":"string",
+    "phoneValidation":"boolean",
+    "password":"string",
+    "photo":"string",
+    "firstName":"string",
+    "lastName":"string",
+    "step":"number",
+    "status":"string",
+    "phoneOtp":"string:required",
+    "createdAt":"Date:required",
+    "updatedAt":"Date:required",
+    "deletedAt":"Date:required",
+    "role": "RoleModel",
+}
+
+//data save  put
+localhost:3000/team/:id 
+{
+    "roleId":"number",
+    "uuid":"string",
+    "email":"string",
+    "emailValidationCode":"string",
+    "emailValidation":"boolean",
+    "indicative":"string",
+    "phone":"string",
+    "phoneValidationCode":"string",
+    "phoneValidation":"boolean",
+    "password":"string",
+    "photo":"string",
+    "firstName":"string",
+    "lastName":"string",
+    "step":"number",
+    "status":"string",
+    "phoneOtp":"string:required",
+    "createdAt":"Date:required",
+    "updatedAt":"Date:required",
+    "deletedAt":"Date:required",
+    "role": "RoleModel",
+}
+
+//data for delete
+localhost:3000/team/:id
+
+

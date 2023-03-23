@@ -1,0 +1,69 @@
+
+//data get All
+localhost:3000/transaction
+
+//data for get id
+localhost:3000/transaction/:id
+
+//data save  post
+localhost:3000/transaction 
+{
+    "uuid":"string",
+    "reference":"string:required",
+    "companyId":"number:required",
+    "companyBankId":"number:required",
+    "thirdId":"number:required",
+    "thirdBankId":"number:required",
+    "companyTeamId":"number:required",
+    "quantity":"number:required",
+    "averageValue":"string",
+    "value":"string",
+    "expirationDate":"Date:required",
+    "observations":"string",
+    "statusProcess":"string",
+    "status":"string",
+    "createdAt":"Date:required",
+    "payedAt":"Date:required",
+    "updatedAt":"Date:required",
+    "deletedAt":"Date:required",
+    "groupPayingId":"any:required",
+    "companyBank": "CompanyBankModel",
+    "company": "CompanyModel",
+    "companyTeam": "CompanyTeamModel",
+    "thirdBank": "ThirdBankModel",
+    "third": "ThirdModel",
+}
+
+//data save  put
+localhost:3000/transaction/:id 
+{
+    "uuid":"string",
+    "reference":"string:required",
+    "companyId":"number:required",
+    "companyBankId":"number:required",
+    "thirdId":"number:required",
+    "thirdBankId":"number:required",
+    "companyTeamId":"number:required",
+    "quantity":"number:required",
+    "averageValue":"string",
+    "value":"string",
+    "expirationDate":"Date:required",
+    "observations":"string",
+    "statusProcess":"string",
+    "status":"string",
+    "createdAt":"Date:required",
+    "payedAt":"Date:required",
+    "updatedAt":"Date:required",
+    "deletedAt":"Date:required",
+    "groupPayingId":"any:required",
+    "companyBank": "CompanyBankModel",
+    "company": "CompanyModel",
+    "companyTeam": "CompanyTeamModel",
+    "thirdBank": "ThirdBankModel",
+    "third": "ThirdModel",
+}
+
+//data for delete
+localhost:3000/transaction/:id
+
+

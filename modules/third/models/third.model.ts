@@ -1,0 +1,76 @@
+
+  export class ThirdModel {
+    id?:number
+    uuid?:string
+    companyId?:number
+    businessName?:string
+    typeDocumentId?:number
+    document?:string
+    dv?:number
+    emailNotification?:string
+    indicativeContact?:string
+    phoneContact?:string
+    categoryId?:number
+    thirdType?:string
+    status?:string
+    createdAt?:Date
+    updatedAt?:Date
+    deletedAt?:Date
+    constructor(
+      {
+        id,
+        uuid,
+        companyId,
+        businessName,
+        typeDocumentId,
+        document,
+        dv,
+        emailNotification,
+        indicativeContact,
+        phoneContact,
+        categoryId,
+        thirdType,
+        status,
+        createdAt,
+        updatedAt,
+        deletedAt,
+      }:{
+        id?:number,
+        uuid?:string,
+        companyId?:number,
+        businessName?:string,
+        typeDocumentId?:number,
+        document?:string,
+        dv?:number,
+        emailNotification?:string,
+        indicativeContact?:string,
+        phoneContact?:string,
+        categoryId?:number,
+        thirdType?:string,
+        status?:string,
+        createdAt?:Date,
+        updatedAt?:Date,
+        deletedAt?:Date,
+      }
+    ){
+        this.id=id
+        this.uuid=uuid
+        this.companyId=companyId
+        this.businessName=businessName
+        this.typeDocumentId=typeDocumentId
+        this.document=document
+        this.dv=dv
+        this.emailNotification=emailNotification
+        this.indicativeContact=indicativeContact
+        this.phoneContact=phoneContact
+        this.categoryId=categoryId
+        this.thirdType=thirdType
+        this.status=status
+        this.createdAt=createdAt
+        this.updatedAt=updatedAt
+        this.deletedAt=deletedAt
+    }
+};
+
+
+

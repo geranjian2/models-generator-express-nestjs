@@ -1,0 +1,29 @@
+
+//data get All
+localhost:3000/company-team
+
+//data for get id
+localhost:3000/company-team/:id
+
+//data save  post
+localhost:3000/company-team 
+{
+    "companyId":"number",
+    "teamId":"number",
+    "company": "CompanyModel",
+    "team": "TeamModel",
+}
+
+//data save  put
+localhost:3000/company-team/:id 
+{
+    "companyId":"number",
+    "teamId":"number",
+    "company": "CompanyModel",
+    "team": "TeamModel",
+}
+
+//data for delete
+localhost:3000/company-team/:id
+
+

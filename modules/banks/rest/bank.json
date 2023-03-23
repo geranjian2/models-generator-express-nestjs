@@ -1,0 +1,35 @@
+
+//data get All
+localhost:3000/bank
+
+//data for get id
+localhost:3000/bank/:id
+
+//data save  post
+localhost:3000/bank 
+{
+    "name":"string",
+    "description":"string",
+    "code":"string",
+    "status":"boolean",
+    "createdAt":"Date:required",
+    "updatedAt":"Date:required",
+    "deletedAt":"Date:required",
+}
+
+//data save  put
+localhost:3000/bank/:id 
+{
+    "name":"string",
+    "description":"string",
+    "code":"string",
+    "status":"boolean",
+    "createdAt":"Date:required",
+    "updatedAt":"Date:required",
+    "deletedAt":"Date:required",
+}
+
+//data for delete
+localhost:3000/bank/:id
+
+

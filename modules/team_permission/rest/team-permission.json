@@ -1,0 +1,31 @@
+
+//data get All
+localhost:3000/team-permission
+
+//data for get id
+localhost:3000/team-permission/:id
+
+//data save  post
+localhost:3000/team-permission 
+{
+    "teamId":"number",
+    "permissionId":"number",
+    "permit":"boolean",
+    "permission": "PermissionModel",
+    "team": "TeamModel",
+}
+
+//data save  put
+localhost:3000/team-permission/:id 
+{
+    "teamId":"number",
+    "permissionId":"number",
+    "permit":"boolean",
+    "permission": "PermissionModel",
+    "team": "TeamModel",
+}
+
+//data for delete
+localhost:3000/team-permission/:id
+
+

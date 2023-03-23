@@ -1,0 +1,31 @@
+
+//data get All
+localhost:3000/role
+
+//data for get id
+localhost:3000/role/:id
+
+//data save  post
+localhost:3000/role 
+{
+    "name":"string",
+    "description":"string",
+    "createdAt":"Date:required",
+    "updatedAt":"Date:required",
+    "deletedAt":"Date:required",
+}
+
+//data save  put
+localhost:3000/role/:id 
+{
+    "name":"string",
+    "description":"string",
+    "createdAt":"Date:required",
+    "updatedAt":"Date:required",
+    "deletedAt":"Date:required",
+}
+
+//data for delete
+localhost:3000/role/:id
+
+

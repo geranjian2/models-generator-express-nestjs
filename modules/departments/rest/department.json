@@ -1,0 +1,35 @@
+
+//data get All
+localhost:3000/department
+
+//data for get id
+localhost:3000/department/:id
+
+//data save  post
+localhost:3000/department 
+{
+    "code":"string",
+    "name":"string",
+    "countryId":"number",
+    "createdAt":"Date:required",
+    "updatedAt":"Date:required",
+    "deletedAt":"Date:required",
+    "country": "CountryModel",
+}
+
+//data save  put
+localhost:3000/department/:id 
+{
+    "code":"string",
+    "name":"string",
+    "countryId":"number",
+    "createdAt":"Date:required",
+    "updatedAt":"Date:required",
+    "deletedAt":"Date:required",
+    "country": "CountryModel",
+}
+
+//data for delete
+localhost:3000/department/:id
+
+
