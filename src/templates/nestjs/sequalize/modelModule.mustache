@@ -1,0 +1,10 @@
+import { Module } from '@nestjs/common';
+import { {{tableClass}}Controller } from '../controllers/{{middleDashName}}.controller';
+import { {{tableClass}}Service } from '../service/{{middleDashName}}.service';
+
+@Module({
+  controllers: [{{tableClass}}Controller],
+  providers: [{{tableClass}}Service],
+  imports: [],
+})
+export class {{tableClass}}Module {}

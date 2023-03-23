@@ -13,6 +13,7 @@ module.exports = async(dbName, dbConnection,  outputModelFile) => {
     let templateService = fs.readFileSync(path.join(__dirname, 'templates/nestjs/sequalize/modelService.mustache'), 'UTF-8');
     let templateQuery = fs.readFileSync(path.join(__dirname, 'templates/nestjs/sequalize/modelQuery.mustache'), 'UTF-8');
     let templateInterface = fs.readFileSync(path.join(__dirname, 'templates/interfaces/modelInterface.mustache'), 'UTF-8');
+    let templateModule = fs.readFileSync(path.join(__dirname, 'templates/nestjs/sequalize/modelModule.mustache'), 'UTF-8');
 
 
     let arrayTables = await pgAdmin(dbName,dbConnection)
@@ -159,7 +160,7 @@ module.exports = async(dbName, dbConnection,  outputModelFile) => {
     //  console.log(classModelNames.classes[6]);
     //  process.exit()
 
-     let folders=['models','entities','dtos','controllers','services','query', 'interface']
+     let folders=['models','entities','dtos','controllers','services','query', 'interface', 'module']
      classModelNames.classes.forEach( async classTable => {
         folders.forEach(async (folder)=>{
             if (!fs.existsSync(`${outputModelFile}/${classTable.table}/${folder}`)){
@@ -173,6 +174,7 @@ module.exports = async(dbName, dbConnection,  outputModelFile) => {
       let service = await Mustache.render(templateService, classTable);
       let query = await Mustache.render(templateQuery, classTable);
       let interface = await Mustache.render(templateInterface, classTable);
+      let module = await Mustache.render(templateModule, classTable);
        fs.writeFileSync(`${outputModelFile}/${classTable.table}/${folders[0]}/${classTable.middleDashName}.model.ts`, models);
        fs.writeFileSync(`${outputModelFile}/${classTable.table}/${folders[1]}/${classTable.middleDashName}.entity.ts`, entities);
        fs.writeFileSync(`${outputModelFile}/${classTable.table}/${folders[2]}/${classTable.middleDashName}.dto.ts`, dtos);
@@ -180,6 +182,7 @@ module.exports = async(dbName, dbConnection,  outputModelFile) => {
        fs.writeFileSync(`${outputModelFile}/${classTable.table}/${folders[4]}/${classTable.middleDashName}.service.ts`, service);
        fs.writeFileSync(`${outputModelFile}/${classTable.table}/${folders[5]}/${classTable.middleDashName}.query.ts`, query);
        fs.writeFileSync(`${outputModelFile}/${classTable.table}/${folders[6]}/${classTable.middleDashName}.interface.ts`, interface);
+       fs.writeFileSync(`${outputModelFile}/${classTable.table}/${folders[7]}/${classTable.middleDashName}.module.ts`, module);
     })
 
     return true;
