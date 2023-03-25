@@ -1,0 +1,41 @@
+import { Sequelize } from 'sequelize-typescript';
+import {
+  SEQUELIZE_DIALECT,
+  SEQUELIZE_PROVIDER,
+} from './sequalize.constants';
+import { models } from './database.models';
+
+console.log(process.env.DATABASE,`process.env.DATABASE::`,'💣');
+export const databaseProviders = [
+  {
+    provide: SEQUELIZE_PROVIDER,
+    useFactory: async () => {
+      const sequelize = new Sequelize(
+        `${process.env.DATABASE}`,
+        `${process.env.DATABASE_USER}`,
+        `${process.env.DATABASE_PASSWORD}`,
+        {
+          // logging: Boolean(process.env.DATABASE_LOGGING),
+          dialect: SEQUELIZE_DIALECT,
+          host: process.env.DATABASE_HOST,
+          port: +process.env.DATABASE_PORT,
+          dialectOptions: {
+            useUTC: false,
+          },
+          timezone: '-05:00',
+          define: {
+            underscored: true,
+            freezeTableName: true,
+            timestamps: false,
+            createdAt: false,
+            updatedAt: false,
+          },
+        },
+      );
+      sequelize.addModels(models);
+
+      //await sequelize.sync();
+      return sequelize;
+    },
+  },
+];

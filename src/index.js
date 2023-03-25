@@ -5,8 +5,11 @@ const Mustache = require('mustache');
 const pluralize = require('pluralize');
 const {pgAdmin} = require('./databases/pg')
 const {dataTypes} = require('./utils/types')
-const {getInitials, singularize, capitalize, camelCase, middleDash, addSpace } = require('./utils/format-text')
+const {getInitials, singularize, capitalize, camelCase, middleDash, addSpace, pluralizeReplace, replace } = require('./utils/format-text')
 module.exports = async(dbName, dbConnection,  outputModelFile) => {
+
+    const folders=['models','entities','dtos','controllers','services','query', 'interface', 'module', 'rest']
+
 
     let templateEntity = fs.readFileSync(path.join(__dirname, 'templates/nestjs/sequalize/modelEntity.mustache'), 'UTF-8');
     let templateModel = fs.readFileSync(path.join(__dirname, 'templates/nestjs/sequalize/modelClass.mustache'), 'UTF-8');
@@ -17,6 +20,11 @@ module.exports = async(dbName, dbConnection,  outputModelFile) => {
     let templateInterface = fs.readFileSync(path.join(__dirname, 'templates/interfaces/modelInterface.mustache'), 'UTF-8');
     let templateModule = fs.readFileSync(path.join(__dirname, 'templates/nestjs/sequalize/modelModule.mustache'), 'UTF-8');
     let templateModuleApp = fs.readFileSync(path.join(__dirname, 'templates/nestjs/sequalize/modelModuleApp.mustache'), 'UTF-8');
+    let templateDatabaseProvider = fs.readFileSync(path.join(__dirname, 'templates/nestjs/sequalize/modelDatabaseProvider.mustache'), 'UTF-8');
+    let templateDatabaseConstants = fs.readFileSync(path.join(__dirname, 'templates/nestjs/sequalize/modelDatabaseConstants.mustache'), 'UTF-8');
+    let templateDatabaseInitial= fs.readFileSync(path.join(__dirname, 'templates/nestjs/sequalize/modelDatabaseInitial.mustache'), 'UTF-8');
+    let templateDatabaseModels= fs.readFileSync(path.join(__dirname, 'templates/nestjs/sequalize/modelDatabaseModels.mustache'), 'UTF-8');
+    let templateDatabaseModule= fs.readFileSync(path.join(__dirname, 'templates/nestjs/sequalize/modelDatabaseModule.mustache'), 'UTF-8');
     let templatePostman = fs.readFileSync(path.join(__dirname, 'templates/rest/modelJsonPostman.mustache'), 'UTF-8');
 
 
@@ -27,18 +35,24 @@ module.exports = async(dbName, dbConnection,  outputModelFile) => {
     };
     
     arrayTables['tables'].forEach((table, index) => {
+
+        let position = table.table.search("_");
+        let tablePluralize = pluralizeReplace(table.table,'-') 
         let modelName = singularize(table.table);
         modelName = camelCase(modelName);
         modelName = capitalize(modelName);
         middleDashName = singularize(middleDash(table.table));
         tableInitial = getInitials(table.table);
-        tablePluralize = pluralize.plural(middleDashName)
+        routeService = `import { ${modelName} } import '../${tablePluralize}/${folders[4]}/${tablePluralize}.service.ts'`
         let data = {
             table: table.table,
+            tableUppercase: table.table.toUpperCase(),
+            tableUppercaseSingular: modelName.toUpperCase(),
             tableClass:modelName,
             modelName: modelName + 'Model',
             EnityName: modelName + 'Entity',
             middleDashName,
+            routeService,
             tableInitial,
             tablePluralize,
             properties: table.columns.map(column => {
@@ -123,13 +137,16 @@ module.exports = async(dbName, dbConnection,  outputModelFile) => {
                 referenceTableName = camelCase(referenceTableName);
                 return {
                     name: targetTableName,
-                    namePluralize: pluralize.plural(column.table_name),
-                    column: column.column_name,
+                    namePluralize: pluralizeReplace(column.table_name,'-'),
+                    namePlural: pluralizeReplace(column.table_name,'_'),
+                    column: replace(column.column_name,'_id',''),
                     columnModel: referenceColumName,
                     targetClass: capitalize(targetTableName), 
                     targetModel: capitalize(targetTableName) + 'Model',
                     targetEntity: capitalize(targetTableName) + 'Entity',
                     targetTableName: column.foreign_table_name,
+                    TableNameRefPluralize: pluralizeReplace(column.foreign_table_name,'-'),
+                    TableNameRefPlural: pluralizeReplace(column.foreign_table_name,'_'),
                     targetTableNameRef: referenceTableName,
                     initialsTableNameRef:getInitials(referenceTableName),
                     TableNameRefModel: capitalize(referenceTableName) + 'Model',
@@ -149,8 +166,9 @@ module.exports = async(dbName, dbConnection,  outputModelFile) => {
                 referenceTableName = camelCase(referenceTableName);
                 return {
                     name: targetTableName,
-                    namePluralize: pluralize.plural(column.table_name),
-                    column: column.column_name,
+                    namePluralize: pluralizeReplace(column.table_name,'-'),
+                    namePlural: pluralizeReplace(column.table_name,'-'),
+                    column: replace(column.column_name,'_id',''),
                     columnModel: referenceColumName,
                     targetModel: capitalize(targetTableName) + 'Model',
                     targetEntity: capitalize(targetTableName) + 'Entity',
@@ -159,16 +177,18 @@ module.exports = async(dbName, dbConnection,  outputModelFile) => {
                     initialsTableNameRef:getInitials(referenceTableName),
                     TableNameRefModel: capitalize(referenceTableName) + 'Model',
                     TableNameRefEntity: capitalize(referenceTableName) + 'Entity',
+                    TableNameRefPluralize: pluralizeReplace(column.foreign_table_name,'-'),
+                    TableNameRefPlural: pluralizeReplace(column.foreign_table_name,'_'),
                     targetColumn: column.foreign_column_name,
                 }
             })
         }
         classModelNames.classes.push(data);
      });
-     console.log(classModelNames.classes[2])
+     console.log(classModelNames.classes[6])
     fs.rmSync(outputModelFile, { recursive: true, force: true });
 
-     let folders=['models','entities','dtos','controllers','services','query', 'interface', 'module', 'rest']
+     
      classModelNames.classes.forEach( async classTable => {
         folders.forEach(async (folder)=>{
             if (!fs.existsSync(`${outputModelFile}/${classTable.tablePluralize}/${folder}`)){
@@ -195,6 +215,22 @@ module.exports = async(dbName, dbConnection,  outputModelFile) => {
        fs.writeFileSync(`${outputModelFile}/${classTable.tablePluralize}/${folders[8]}/${classTable.tablePluralize}.json`, rest);
     })
     let moduleApp = await Mustache.render(templateModuleApp, {tables:classModelNames.classes});
-    fs.writeFileSync(`${outputModelFile}/module.app.ts`, moduleApp);
+    let databaseProvider = await Mustache.render(templateDatabaseProvider, {tables:classModelNames.classes});
+    let databaseContants = await Mustache.render(templateDatabaseConstants, {tables:classModelNames.classes});
+    let databaseInitial = await Mustache.render(templateDatabaseInitial, {tables:classModelNames.classes});
+    let databaseModels = await Mustache.render(templateDatabaseModels, {tables:classModelNames.classes});
+    let databaseModule = await Mustache.render(templateDatabaseModule, {tables:classModelNames.classes});
+
+
+    if (!fs.existsSync(`${outputModelFile}/../database`)){
+        await fs.mkdirSync(`${outputModelFile}/../database`, { recursive: true });
+    }
+    fs.writeFileSync(`${outputModelFile}/../app.module.ts`, moduleApp);
+    fs.writeFileSync(`${outputModelFile}/../database/modules.providers.ts`, databaseProvider);
+    fs.writeFileSync(`${outputModelFile}/../database/sequalize.constants.ts`, databaseContants);
+    fs.writeFileSync(`${outputModelFile}/../database/database.providers.ts`, databaseInitial);
+    fs.writeFileSync(`${outputModelFile}/../database/database.models.ts`, databaseModels);
+    fs.writeFileSync(`${outputModelFile}/../database/database.module.ts`, databaseModule);
     return true;
+
 }

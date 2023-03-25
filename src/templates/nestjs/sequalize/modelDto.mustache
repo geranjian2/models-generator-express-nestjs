@@ -1,9 +1,12 @@
 
   import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
     {{#foreignsRelations}}
-      import { {{targetModel}} } from ''
+      import { {{targetModel}} } from '../../{{namePluralize}}/models/{{namePluralize}}.model'
     {{/foreignsRelations}}
-  import { {{modelName}} } from ''
+    {{#relations}}
+      import { {{TableNameRefModel}} } from '../../{{TableNameRefPluralize}}/models/{{TableNameRefPluralize}}.model';
+    {{/relations}}
+  import { {{modelName}} } from '../models/{{tablePluralize}}.model'
   export class {{tableClass}}Dto {
     constructor(
       register: {{modelName}}
@@ -12,10 +15,10 @@
         this.{{nameCamelCase}}=register.{{nameCamelCase}}
       {{/properties}}
       {{#relations}}
-         this.{{targetTableNameRef}}= register.{{TableNameRefEntity}}
+         this.{{TableNameRefPlural}}= register.{{TableNameRefPlural}}
       {{/relations}}
       {{#foreignsRelations}}
-        this.{{namePluralize}} = register.{{namePluralize}}
+        this.{{namePlural}} = register.{{namePlural}}
       {{/foreignsRelations}}
     }
   {{#properties}}
@@ -30,11 +33,11 @@
   {{/properties}}
    {{#relations}}
       @ApiProperty()
-      {{targetTableNameRef}}: {{TableNameRefEntity}};
+      {{TableNameRefPlural}}: {{TableNameRefModel}};
     {{/relations}}
      {{#foreignsRelations}}
       @ApiProperty()
-      {{namePluralize}}?: {{targetModel}}[];
+      {{namePlural}}?: {{targetModel}}[];
     {{/foreignsRelations}}
 };
 

@@ -1,11 +1,11 @@
 #!/bin/bash
-exitv=5
+exitv=3
 
 Green='\033[0;32m'
 NC='\033[0m' # No Color
 
 echo "Seleccione el port forward"
-echo -e " 1-${Green}Git${NC} \n 2-${Green}Node${NC}\n 3-${Green}Migraciones${NC}\n 4-${Green}Microservicios${NC}\n ${exitv}-${Green}Salir${NC}"
+echo -e " 1-${Green}Git${NC} \n 2-${Green}Node${NC}\n ${exitv}-${Green}Salir${NC}"
 read x
 
 while [ $x != $exitv ]
@@ -18,16 +18,6 @@ do
     ;;
     2)
         source  sh/node.sh
-        init
-        exit
-    ;;
-    3)
-        source  sh/migrations.sh
-        init
-        exit
-    ;;
-    4)
-        source  sh/microservice.sh
         init
         exit
     ;;

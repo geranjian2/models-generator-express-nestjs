@@ -23,6 +23,28 @@ const middleDash = (word) => word.toLowerCase()
 const addSpace = (word) => word.toLowerCase()
     .replace('_',' ');
 
+const replace = (word,string, stringNew) => word.toLowerCase()
+    .replace(string,stringNew);
+
+
+const pluralizeReplace = (word,replace) => {
+        let pluralizeWord
+        let find = word.search("_");
+        if(find!=-1){
+            var words = word.split('_');
+            let array = words.map((w,i)=>{
+                if(i>0){
+                    return pluralize.plural(w)
+                }
+                return w
+
+            })
+            pluralizeWord =  array.join(replace)
+        }else{
+            pluralizeWord = pluralize.plural(word)
+        }
+        return pluralizeWord
+}
 
     module.exports = {
         getInitials,
@@ -30,5 +52,7 @@ const addSpace = (word) => word.toLowerCase()
         capitalize,
         camelCase,
         middleDash,
-        addSpace
+        addSpace,
+        pluralizeReplace,
+        replace
     }

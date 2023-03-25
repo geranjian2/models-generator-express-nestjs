@@ -1,13 +1,20 @@
 
-   {{#relations}}
-  import {{TableNameRefModel}} from '' 
-    {{/relations}}
+{{#foreignsRelations}}
+import { {{targetModel}} } from '../../{{namePluralize}}/models/{{namePluralize}}.model'
+{{/foreignsRelations}}
+
+{{#relations}}
+import { {{TableNameRefModel}} } from '../../{{TableNameRefPluralize}}/models/{{TableNameRefPluralize}}.model';
+{{/relations}}
   export interface {{modelName}} {
     {{#properties}}
     {{nameCamelCase}}?:{{type}}
     {{/properties}}
+    {{#foreignsRelations}}
+    {{namePlural}}?: {{targetModel}}[];
+    {{/foreignsRelations}}
     {{#relations}}
-    {{targetTableNameRef}}: {{TableNameRefModel}};
+    {{TableNameRefPlural}}: {{TableNameRefModel}};
     {{/relations}}
 };
 

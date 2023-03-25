@@ -11,11 +11,13 @@ import {
   HasMany,
 } from 'sequelize-typescript';
 {{#relations}}
-    import { {{TableNameRefEntity}} } from '';
+
+
+import { {{TableNameRefEntity}} } from '../../{{TableNameRefPluralize}}/entities/{{TableNameRefPluralize}}.entity';
 {{/relations}}
 
 {{#foreignsRelations}}
-   import { {{targetEntity}} } from '';
+   import { {{targetEntity}} } from '../../{{namePluralize}}/entities/{{namePluralize}}.entity'
 {{/foreignsRelations}}
 
 
@@ -88,7 +90,7 @@ export class {{EnityName}} extends Model<{{EnityName}}> {
     {{/relations}}
     {{#foreignsRelations}}
          @HasMany(() => {{targetEntity}})
-         {{namePluralize}}?: {{targetEntity}}[];
+         {{namePlural}}?: {{targetEntity}}[];
 
     {{/foreignsRelations}}
 }

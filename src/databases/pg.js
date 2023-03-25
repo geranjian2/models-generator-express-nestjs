@@ -79,7 +79,10 @@ const pgAdmin = async (dbName, dbConnection)=>{
                 }
             }
             if(arrayTables['tables'][index]['table']===foreing.foreign_table_name){
-                arrayTables['tables'][index]['foreignsRelations'].push(foreing)
+                let existeElemen =  arrayTables['tables'][index]['foreignsRelations'].find(element=>element.table_name===foreing.table_name)
+                if(!existeElemen){
+                    arrayTables['tables'][index]['foreignsRelations'].push(foreing)
+                }
             }
         });
         idsPrimary.rows.forEach((foreing, index4) => {
