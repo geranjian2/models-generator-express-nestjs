@@ -51,7 +51,6 @@ const main = async () => {
 
 ### Add command package.json
 
-**NPM**
 ```bash
  "generator": "node main.js"
 ```
