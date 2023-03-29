@@ -12,7 +12,7 @@ newBranchDevelop(){
   git branch
   git stash pop
   git add .
-  git commit -m "Creación de rama feature-CMM-$1-$2"
+  git commit -m "Create branch feature-CMM-$1-$2"
   git push --set-upstream origin "feature-CMM-$1-$2"
   exit 0
 }
