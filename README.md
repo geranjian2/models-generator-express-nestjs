@@ -1,8 +1,6 @@
 <h1 align="center">
 <div align="center">
-  <a href="http://nestjs.com/" target="_blank">
-    <img src="./media/logo-generators.png" width="600" alt="NestJS Express Generators Logo" />
-  </a>
+    <img src="https://raw.githubusercontent.com/geranjian2/models-generator-express-nestjs/develop/media/logo-generators.png" width="600" alt="NestJS Express Generators Logo" />
 </div>
 </h1>
 
