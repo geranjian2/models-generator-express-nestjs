@@ -23,12 +23,12 @@ module.exports = async(dbName, dbConnection,  outputModelFile) => {
         let template = new TemplateNestSequalize(config); 
         fs.rmSync(outputModelFile, { recursive: true, force: true });
         await template.run(dataGenerate)
+        console.info('Success Generator!!')
         return true;
        
     } catch (error) {
         let pe = new PrettyError();
         let renderedError = pe.render(new Error(error.message));
-        console.log(renderedError);
     }
     
 

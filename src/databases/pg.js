@@ -99,7 +99,6 @@ const pgAdmin = async (dbName, dbConnection)=>{
     } catch (error) {
         let pe = new PrettyError();
         let renderedError = pe.render(new Error(error.message));
-        console.log(renderedError);
     }
 
 }

@@ -30,15 +30,12 @@ class TemplateNestSequalize {
         this.config = config
     }
     
-    async run(models) {
-        
+    async run(models) { 
         await this.generator(models)
         await this.generateIndividual(models)
-        // await this.generateIndividual(models)
     } 
     
      generator(models){
-        // console.log(models)
         models.classes.forEach( async classTable => {
             await this.createFolder(classTable)
             let models     = Mustache.render(templateModel, classTable);
@@ -59,7 +56,7 @@ class TemplateNestSequalize {
             fs.writeFileSync(`${this.config.route}/${classTable.tablePluralize}/${FOLDERS[6]}/${classTable.tablePluralize}.interface.ts`, interfaceT);
             
             fs.writeFileSync(`${this.config.route}/${classTable.tablePluralize}/${FOLDERS[0]}/${classTable.tablePluralize}.model.ts`, models);
-            console.log(classTable);
+
             
             fs.writeFileSync(`${this.config.route}/${classTable.tablePluralize}/${FOLDERS[1]}/${classTable.tablePluralize}.entity.ts`, entities);
             fs.writeFileSync(`${this.config.route}/${classTable.tablePluralize}/${FOLDERS[2]}/${classTable.tablePluralize}.dto.ts`, dtos);
