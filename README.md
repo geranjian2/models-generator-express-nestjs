@@ -55,4 +55,41 @@ const main = async () => {
 ```bash
  "generator": "node main.js"
 ```
+## Running 
 
+```bash
+npm run generator
+```
+
+
+Example modules generators
+
+```bash
+├── ./app
+│   └── main.ts
+│   └── app.module.ts
+│   ├── modules
+│   │   ├── users
+│   │   │   ├── controller
+│   │   │   │   ├── user.controller.ts
+│   │   │   ├── dtos
+│   │   │   │   ├── user.dto.ts
+│   │   │   ├── entities
+│   │   │   │   ├── user.entity.ts
+│   │   │   ├── interface
+│   │   │   │   ├── user.interface.ts
+│   │   │   ├── models
+│   │   │   │   ├── user.model.ts
+│   │   │   ├── module
+│   │   │   │   ├── user.module.ts
+│   │   │   ├── rest
+│   │   │   │   ├── user.json
+│   │   │   ├── services
+│   │   │   │   ├── user.service.ts
+│   ├── database
+│   │   ├── database.models.ts
+│   │   ├── database.module.ts
+│   │   ├── database.providers.ts
+│   │   ├── sequalize.constants.ts
+│   │   └── modules.providers.ts
+```
