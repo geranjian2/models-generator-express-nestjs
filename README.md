@@ -92,3 +92,11 @@ Example modules generators
 │   │   ├── sequalize.constants.ts
 │   │   └── modules.providers.ts
 ```
+
+
+## Base Github nestjs sqlize 
+
+```bash
+https://github.com/geranjian2/nestjs-base-sequelize
+```
+
