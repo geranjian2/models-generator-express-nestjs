@@ -48,3 +48,11 @@ const main = async () => {
     process.exit();
 }
 ```
+
+### Add command package.json
+
+**NPM**
+```bash
+ "generator": "node main.js"
+```
+
