@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
-import { {{tableClass}}Controller } from '../controllers/{{tablePluralize}}.controller';
-import { {{tableClass}}Service } from '../services/{{tablePluralize}}.service';
+{{&routeController}}
+{{&routeService}}
 
 @Module({
-  controllers: [{{tableClass}}Controller],
-  providers: [{{tableClass}}Service],
+  controllers: [{{tableClassController}}],
+  providers: [{{tableClassService}}],
   imports: [],
 })
-export class {{tableClass}}Module {}
+export class {{tableClassModule}} {}

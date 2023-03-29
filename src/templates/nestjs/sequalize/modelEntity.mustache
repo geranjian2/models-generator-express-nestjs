@@ -10,20 +10,19 @@ import {
   UpdatedAt,
   HasMany,
 } from 'sequelize-typescript';
-{{#relations}}
-
-
-import { {{TableNameRefEntity}} } from '../../{{TableNameRefPluralize}}/entities/{{TableNameRefPluralize}}.entity';
-{{/relations}}
 
 {{#foreignsRelations}}
-   import { {{targetEntity}} } from '../../{{namePluralize}}/entities/{{namePluralize}}.entity'
+{{&routeEntity}}
 {{/foreignsRelations}}
 
+{{#relations}}
+{{&routeEntity}}
+{{/relations}}
 
 
-@Table({ modelName: '{{table}}' })
-export class {{EnityName}} extends Model<{{EnityName}}> {
+
+@Table({ modelName: '{{nameTable}}' })
+export class {{tableEntity}} extends Model<{{tableEntity}}> {
     {{#properties}}
         {{!is not primary }}
         {{^primary}}
@@ -84,13 +83,11 @@ export class {{EnityName}} extends Model<{{EnityName}}> {
         {{/primary}}
     {{/properties}}
     {{#relations}}
-         @BelongsTo(() => {{TableNameRefEntity}})
-         {{targetTableNameRef}}: {{TableNameRefEntity}};
-         
+         @BelongsTo(() => {{tableEntity}})
+         {{tableCamelCase}}: {{tableEntity}};
     {{/relations}}
     {{#foreignsRelations}}
-         @HasMany(() => {{targetEntity}})
-         {{namePlural}}?: {{targetEntity}}[];
-
+         @HasMany(() => {{tableEntity}})
+         {{tableCamelPluralize}}?: {{tableEntity}}[];
     {{/foreignsRelations}}
 }

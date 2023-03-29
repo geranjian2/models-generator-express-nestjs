@@ -15,20 +15,20 @@ const queryFieldSearch = (fieldSearch) => {
   return fs;
 }
 
-export const {{tableClass}}TotalQuery = (fieldSearch: string) => {
+export const {{tableModel}}TotalQuery = (fieldSearch: string) => {
   const fs = queryFieldSearch(fieldSearch);
 
   const query = `
     SELECT count(*) AS "count"
-    FROM {{table}} {{tableInitial}}
+    FROM {{nameTable}} {{tableInitial}}
     {{#relations}}
-         INNER JOIN {{targetTableName}} {{initialsTableNameRef}} ON {{initialsTableNameRef}}.id = {{tableInitial}}.{{column}}
+         INNER JOIN {{nameTable}} {{tableInitial}} ON {{tableInitial}}.id = {{tableInialP}}.{{name}}
     {{/relations}}
     WHERE {{tableInitial}}.deleted_at IS NULL ${fs}`;
   return query;
 };
 
-export const {{tableClass}}Query = (fieldSearch: string) => {
+export const {{tableModel}}Query = (fieldSearch: string) => {
   const fs = queryFieldSearch(fieldSearch);
 
   return `SELECT 
@@ -37,7 +37,7 @@ export const {{tableClass}}Query = (fieldSearch: string) => {
            {{/properties}}
           FROM {{table}} {{tableInitial}}
            {{#relations}}
-            INNER JOIN {{targetTableName}} {{initialsTableNameRef}} ON {{initialsTableNameRef}}.id = {{tableInitial}}. {{column}}
+            INNER JOIN {{nameTable}} {{tableInitial}} ON {{tableInitial}}.id = {{tableInialP}}.{{name}}
           {{/relations}}
           WHERE {{tableInitial}}.deleted_at IS NULL ${fs}`;
 };

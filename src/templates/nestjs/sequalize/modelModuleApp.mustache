@@ -5,14 +5,14 @@ import { DatabaseModule } from './database/database.module';
 
 
 {{#tables}}
-import { {{tableClass}}Module } from './modules/{{tablePluralize}}/module/{{tablePluralize}}.module';
+{{&routeModule}}
 {{/tables}}
 
 
 @Module({
   imports: [DatabaseModule,
    {{#tables}}
-        {{tableClass}}Module,
+        {{tableClassModule}},
     {{/tables}}
    ],
   controllers: [AppController],

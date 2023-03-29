@@ -17,17 +17,18 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import {  ApiTags } from '@nestjs/swagger';
-import { {{tableClass}}Service } from '../services/{{tablePluralize}}.service';
 
-@Controller('{{middleDashName}}')
-@ApiTags('{{middleDashName}}')
-  export class {{tableClass}}Controller {
+{{&routeService}}
+
+@Controller('{{tablemiddleDash}}')
+@ApiTags('{{tablemiddleDash}}')
+  export class {{tableClassController}} {
    constructor(
-    private readonly _{{tableClass}}Service: {{tableClass}}Service,
+    private readonly {{tableCamelCaseService}}: {{tableClassService}},
   ) {}
   @Get()
   findAll() {
-    return this._{{tableClass}}Service.findAll();
+    return this.{{tableCamelCaseService}}.findAll();
   }
 }
 

@@ -1,9 +1,9 @@
 {{#tables}}
-import { {{EnityName}} } from '../modules/{{tablePluralize}}/entities/{{tablePluralize}}.entity';
+import { {{tableEntity}} } from '../modules/{{tablePluralize}}/entities/{{tablePluralize}}.entity';
 {{/tables}}
 
 export const models = [
    {{#tables}}
-  {{EnityName}},
+  {{tableEntity}},
   {{/tables}}
 ]

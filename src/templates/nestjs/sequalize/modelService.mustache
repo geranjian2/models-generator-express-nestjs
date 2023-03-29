@@ -6,18 +6,18 @@ import {
   Res,
 } from '@nestjs/common';
 import { REPOSITORIES } from 'src/database/sequalize.constants';
-import { {{EnityName}} } from '../entities/{{tablePluralize}}.entity';
-import { {{tableClass}}Dto } from '../dtos/{{tablePluralize}}.dto';
+{{&routeDto}}
+{{&routeEntity}}
 
   @Injectable()
-  export class {{tableClass}}Service {
+  export class {{tableClassService}} {
     constructor(
     @Inject(REPOSITORIES.{{tableUppercase}})
-    private readonly _{{tableClass}}Repository: typeof {{EnityName}},
+    private readonly {{tableClassrepository}}: typeof {{tableEntity}},
   ) {}
     async findAll() {
-      const _{{table}} = await this._{{tableClass}}Repository.findAll<any>();
-      return _{{table}}.map({{tableInitial}} => new {{tableClass}}Dto({{tableInitial}}));
+      const _{{tableCamelCase}} = await this.{{tableClassrepository}}.findAll<any>();
+      return _{{tableCamelCase}}.map({{tableInitial}} => new {{tableModelDto}}({{tableInitial}}));
     }
   };
 

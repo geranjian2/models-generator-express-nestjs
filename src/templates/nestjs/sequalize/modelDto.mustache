@@ -1,24 +1,27 @@
 
   import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-    {{#foreignsRelations}}
-      import { {{targetModel}} } from '../../{{namePluralize}}/models/{{namePluralize}}.model'
-    {{/foreignsRelations}}
-    {{#relations}}
-      import { {{TableNameRefModel}} } from '../../{{TableNameRefPluralize}}/models/{{TableNameRefPluralize}}.model';
-    {{/relations}}
-  import { {{modelName}} } from '../models/{{tablePluralize}}.model'
-  export class {{tableClass}}Dto {
+  {{#foreignsRelations}}
+  {{&routeModel}}
+  {{/foreignsRelations}}
+
+  {{#relations}}
+  {{&routeModel}}
+  {{/relations}}
+
+  {{&routeModel}}
+
+  export class {{tableModelDto}} {
     constructor(
-      register: {{modelName}}
+      register: {{tableClassModel}}
     ){
        {{#properties}}
         this.{{nameCamelCase}}=register.{{nameCamelCase}}
       {{/properties}}
       {{#relations}}
-         this.{{TableNameRefPlural}}= register.{{TableNameRefPlural}}
+        this.{{tableCamelCase}}= register.{{tableCamelCase}}
       {{/relations}}
       {{#foreignsRelations}}
-        this.{{namePlural}} = register.{{namePlural}}
+        this.{{tableCamelPluralize}} = register.{{tableCamelPluralize}}
       {{/foreignsRelations}}
     }
   {{#properties}}
@@ -33,11 +36,11 @@
   {{/properties}}
    {{#relations}}
       @ApiProperty()
-      {{TableNameRefPlural}}: {{TableNameRefModel}};
+      {{tableCamelCase}}: {{tableClassModel}};
     {{/relations}}
      {{#foreignsRelations}}
       @ApiProperty()
-      {{namePlural}}?: {{targetModel}}[];
+      {{tableCamelPluralize}}?: {{tableClassModel}}[];
     {{/foreignsRelations}}
 };
 

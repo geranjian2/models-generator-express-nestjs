@@ -2,7 +2,7 @@ const pluralize = require('pluralize');
 
 const getInitials = function (string) {
     let names = string.split('_'),
-        initials = names[0].substring(0, 1);
+        initials = names[0].substring(0, 3);
     
     if (names.length > 1) {
         initials += names[names.length - 1].substring(0, 1);

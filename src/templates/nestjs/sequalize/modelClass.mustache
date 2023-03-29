@@ -1,21 +1,21 @@
 
 {{#foreignsRelations}}
-import { {{targetModel}} } from '../../{{namePluralize}}/models/{{namePluralize}}.model'
+{{&routeModel}}
 {{/foreignsRelations}}
 
 {{#relations}}
-import { {{TableNameRefModel}} } from '../../{{TableNameRefPluralize}}/models/{{TableNameRefPluralize}}.model';
+{{&routeModel}}
 {{/relations}}
 
-  export class {{modelName}} {
+  export class {{tableClassModel}} {
     {{#properties}}
     {{nameCamelCase}}?:{{type}}
     {{/properties}}
     {{#foreignsRelations}}
-    {{namePlural}}?: {{targetModel}}[];
+    {{tableCamelPluralize}}?: {{tableClassModel}}[];
     {{/foreignsRelations}}
     {{#relations}}
-    {{TableNameRefPlural}}: {{TableNameRefModel}};
+    {{tableCamelCase}}: {{tableClassModel}};
     {{/relations}}
     constructor(
       {

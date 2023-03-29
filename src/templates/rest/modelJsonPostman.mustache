@@ -1,26 +1,25 @@
 
 //data get All
-localhost:3000/{{middleDashName}}
+localhost:3000/{{tablemiddleDash}}
 
 //data for get id
-localhost:3000/{{middleDashName}}/:id
+localhost:3000/{{tablemiddleDash}}/:id
 
 //data save  post
-localhost:3000/{{middleDashName}} 
+localhost:3000/{{tablemiddleDash}} 
 {
     {{#properties}}
     {{^primary}}
+    {{^isDate}}
     {{#is_nullable}}
-    "{{nameCamelCase}}":"{{type}}:required",
-    {{/is_nullable}}
-    {{^is_nullable}}
     "{{nameCamelCase}}":"{{type}}",
     {{/is_nullable}}
+    {{^is_nullable}}
+    "{{nameCamelCase}}":"{{type}}:required",
+    {{/is_nullable}}
+    {{/isDate}}
     {{/primary}}
     {{/properties}}
-    {{#relations}}
-    "{{targetTableNameRef}}": "{{TableNameRefModel}}",
-    {{/relations}}
 }
 
 //data save  put
@@ -28,17 +27,16 @@ localhost:3000/{{middleDashName}}/:id
 {
     {{#properties}}
     {{^primary}}
+    {{^isDate}}
     {{#is_nullable}}
-    "{{nameCamelCase}}":"{{type}}:required",
-    {{/is_nullable}}
-    {{^is_nullable}}
     "{{nameCamelCase}}":"{{type}}",
     {{/is_nullable}}
+    {{^is_nullable}}
+    "{{nameCamelCase}}":"{{type}}:required",
+    {{/is_nullable}}
+    {{/isDate}}
     {{/primary}}
     {{/properties}}
-    {{#relations}}
-    "{{targetTableNameRef}}": "{{TableNameRefModel}}",
-    {{/relations}}
 }
 
 //data for delete
