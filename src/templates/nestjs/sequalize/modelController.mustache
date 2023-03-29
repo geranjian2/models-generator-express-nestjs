@@ -1,0 +1,36 @@
+
+  
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpException,
+  HttpStatus,
+  Inject,
+  Param,
+  Post,
+  Put,
+  Query,
+  Req,
+  Res,
+  UseGuards,
+} from '@nestjs/common';
+import {  ApiTags } from '@nestjs/swagger';
+
+{{&routeService}}
+
+@Controller('{{tablemiddleDash}}')
+@ApiTags('{{tablemiddleDash}}')
+  export class {{tableClassController}} {
+   constructor(
+    private readonly {{tableCamelCaseService}}: {{tableClassService}},
+  ) {}
+  @Get()
+  findAll() {
+    return this.{{tableCamelCaseService}}.findAll();
+  }
+}
+
+
+

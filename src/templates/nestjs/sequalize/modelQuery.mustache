@@ -1,0 +1,47 @@
+const queryFieldSearch = (fieldSearch) => {
+  let fs = '';
+  {{#properties}}
+  const {{nameCamelCase}} = 'LOWER(t.{{name}}) LIKE :search';
+  {{/properties}}
+  switch (fieldSearch) {
+  {{#properties}}
+    case '{{name}}':
+      fs = `AND ${ {{nameCamelCase}} }`;
+    break;
+  {{/properties}}
+  default:
+  break;
+  }
+  return fs;
+}
+
+export const {{tableModel}}TotalQuery = (fieldSearch: string) => {
+  const fs = queryFieldSearch(fieldSearch);
+
+  const query = `
+    SELECT count(*) AS "count"
+    FROM {{nameTable}} {{tableInitial}}
+    {{#relations}}
+         INNER JOIN {{nameTable}} {{tableInitial}} ON {{tableInitial}}.id = {{tableInialP}}.{{name}}
+    {{/relations}}
+    WHERE {{tableInitial}}.deleted_at IS NULL ${fs}`;
+  return query;
+};
+
+export const {{tableModel}}Query = (fieldSearch: string) => {
+  const fs = queryFieldSearch(fieldSearch);
+
+  return `SELECT 
+           {{#properties}}
+            {{tableInitial}}.{{name}} {{nameCamelCase}},
+           {{/properties}}
+          FROM {{table}} {{tableInitial}}
+           {{#relations}}
+            INNER JOIN {{nameTable}} {{tableInitial}} ON {{tableInitial}}.id = {{tableInialP}}.{{name}}
+          {{/relations}}
+          WHERE {{tableInitial}}.deleted_at IS NULL ${fs}`;
+};
+
+
+
+

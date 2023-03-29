@@ -1,0 +1,10 @@
+import { Module } from '@nestjs/common';
+{{&routeController}}
+{{&routeService}}
+
+@Module({
+  controllers: [{{tableClassController}}],
+  providers: [{{tableClassService}}],
+  imports: [],
+})
+export class {{tableClassModule}} {}

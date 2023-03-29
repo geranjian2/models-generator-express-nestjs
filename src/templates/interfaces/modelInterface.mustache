@@ -1,0 +1,22 @@
+
+{{#foreignsRelations}}
+  {{&routeInterface}}
+{{/foreignsRelations}}
+
+{{#relations}}
+{{&routeInterface}}
+{{/relations}}
+  export interface {{tableModel}} {
+    {{#properties}}
+    {{nameCamelCase}}?:{{type}}
+    {{/properties}}
+    {{#foreignsRelations}}
+    {{tableCamelPluralize}}?: {{tableModel}}[];
+    {{/foreignsRelations}}
+    {{#relations}}
+    {{tableCamelCase}}: {{tableModel}};
+    {{/relations}}
+};
+
+
+

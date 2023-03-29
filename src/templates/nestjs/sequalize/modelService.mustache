@@ -1,0 +1,25 @@
+import {
+  HttpException,
+  HttpStatus,
+  Inject,
+  Injectable,
+  Res,
+} from '@nestjs/common';
+import { REPOSITORIES } from 'src/database/sequalize.constants';
+{{&routeDto}}
+{{&routeEntity}}
+
+  @Injectable()
+  export class {{tableClassService}} {
+    constructor(
+    @Inject(REPOSITORIES.{{tableUppercase}})
+    private readonly {{tableClassrepository}}: typeof {{tableEntity}},
+  ) {}
+    async findAll() {
+      const _{{tableCamelCase}} = await this.{{tableClassrepository}}.findAll<any>();
+      return _{{tableCamelCase}}.map({{tableInitial}} => new {{tableModelDto}}({{tableInitial}}));
+    }
+  };
+
+
+
