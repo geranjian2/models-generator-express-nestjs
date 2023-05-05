@@ -16,9 +16,9 @@ const NUMBER_FOLDER = {
   QUERY: 3,
   INTERFACE: 4,
   REST: 5,
-//   CONTROLLER: 3,
-//   SERVICE: 4,
-//   MODULE: 7,
+  CONTROLLER: 6,
+  SERVICE: 7,
+  MODULE: 8,
 };
 
 const MODELS_NAME = {
@@ -34,9 +34,14 @@ const ORMS = {
   typeorm: "TYPEORM",
   sequelize: "SEQUELIZE",
 };
+const DATABASE = {
+  POSTGRES: "postgres",
+  MYSQL: "mysql",
+};
 module.exports = {
   FOLDERS,
   NUMBER_FOLDER,
   MODELS_NAME,
   ORMS,
+  DATABASE
 };

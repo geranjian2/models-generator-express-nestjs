@@ -1,0 +1,38 @@
+import { Inject, Injectable } from "@nestjs/common";
+import { JwtService } from '@nestjs/jwt';
+import { REPOSITORIES } from "src/database/sequalize.constants";
+{{&routeEntityTable}}
+
+
+@Injectable()
+export class AuthService {
+    constructor(
+        private jwtService: JwtService,
+        @Inject(REPOSITORIES.{{tableUppercase}})
+        private readonly {{tableClassrepository}}: typeof {{tableEntity}},
+    ){}
+    async findOne(id:any): Promise<any> {
+        const userRecord = await this.{{tableClassrepository}}.findOne(id) 
+        return userRecord
+    }
+    async validateUser(email:string, pass:string): Promise<any> {
+        const userRecord = await this.{{tableClassrepository}}.findOne({where:{email}})
+        if(userRecord){
+            const comparePassword = await userRecord.comparePassword(pass)
+            if(userRecord &&  comparePassword){
+                return userRecord;
+            }
+        }
+        return null;
+    }
+    async login(userAuth:{{tableEntity}}){
+        
+        const {id,{{passwordAuth}}, ...user} = userAuth.dataValues;
+        
+        const payload ={sub:id};
+        return { 
+            user,
+            accessToken:this.jwtService.sign(payload),
+        }
+    }
+}

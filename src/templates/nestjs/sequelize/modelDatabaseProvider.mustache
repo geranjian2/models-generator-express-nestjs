@@ -1,0 +1,15 @@
+import { Sequelize } from 'sequelize-typescript';
+import { REPOSITORIES } from "./sequalize.constants";
+{{#tables}}
+import { {{tableEntity}} } from '../modules/{{tablePluralize}}/entities/{{tablePluralize}}.entity';
+{{/tables}}
+
+export const repositoryProviders = [
+  {{#tables}}
+    {
+        provide: REPOSITORIES.{{tableUppercase}},
+        useValue: {{tableEntity}},
+    },
+  {{/tables}}
+
+]

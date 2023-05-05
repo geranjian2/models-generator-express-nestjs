@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { ConfigTypeormModule } from './config/config.typeorm.module'
+import { DatabaseModule } from './database/database.module';
 
 
 {{#tables}}
@@ -11,14 +11,13 @@ import { ConfigTypeormModule } from './config/config.typeorm.module'
 
 
 @Module({
-  imports: [
-   ConfigTypeormModule,
-   {{#tables}}
-   {{tableClassModule}},
-   {{/tables}}
-   {{#auth}}
-   {{moduleAuth}},
-   {{/auth}}
+  imports: [DatabaseModule,
+    {{#tables}}
+    {{tableClassModule}},
+    {{/tables}}
+    {{#auth}}
+    {{moduleAuth}},
+    {{/auth}}
    ],
   controllers: [],
   providers: [],

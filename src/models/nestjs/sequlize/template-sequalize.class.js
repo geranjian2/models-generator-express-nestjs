@@ -51,29 +51,29 @@ class TemplateNestSequelize {
             let moduleT      = Mustache.render(templateModule, classTable);
             let rest         = Mustache.render(templatePostman, classTable);
 
-            fs.writeFileSync(`${this.config.route}/${classTable.tablePluralize}/${FOLDERS[NUMBER_FOLDER.QUERY]}/${classTable.tablePluralize}.query.ts`, query);
+            fs.writeFileSync(`${this.config.outputModelFile}/${classTable.tablePluralize}/${FOLDERS[NUMBER_FOLDER.QUERY]}/${classTable.tablePluralize}.query.ts`, query);
 
-            fs.writeFileSync(`${this.config.route}/${classTable.tablePluralize}/${FOLDERS[NUMBER_FOLDER.REST]}/${classTable.tablePluralize}.json`, rest);
+            fs.writeFileSync(`${this.config.outputModelFile}/${classTable.tablePluralize}/${FOLDERS[NUMBER_FOLDER.REST]}/${classTable.tablePluralize}.json`, rest);
 
-            fs.writeFileSync(`${this.config.route}/${classTable.tablePluralize}/${FOLDERS[NUMBER_FOLDER.INTERFACE]}/${classTable.tablePluralize}.interface.ts`, interfaceT);
+            fs.writeFileSync(`${this.config.outputModelFile}/${classTable.tablePluralize}/${FOLDERS[NUMBER_FOLDER.INTERFACE]}/${classTable.tablePluralize}.interface.ts`, interfaceT);
             
-            fs.writeFileSync(`${this.config.route}/${classTable.tablePluralize}/${FOLDERS[NUMBER_FOLDER.MODELS]}/${classTable.tablePluralize}.model.ts`, models);
+            fs.writeFileSync(`${this.config.outputModelFile}/${classTable.tablePluralize}/${FOLDERS[NUMBER_FOLDER.MODELS]}/${classTable.tablePluralize}.model.ts`, models);
             
             
-            fs.writeFileSync(`${this.config.route}/${classTable.tablePluralize}/${FOLDERS[NUMBER_FOLDER.ENTITY]}/${classTable.tablePluralize}.entity.ts`, entities);
+            fs.writeFileSync(`${this.config.outputModelFile}/${classTable.tablePluralize}/${FOLDERS[NUMBER_FOLDER.ENTITY]}/${classTable.tablePluralize}.entity.ts`, entities);
             
-            fs.writeFileSync(`${this.config.route}/${classTable.tablePluralize}/${FOLDERS[NUMBER_FOLDER.DTO]}/${classTable.tablePluralize}.dto.ts`, dtos);
-            fs.writeFileSync(`${this.config.route}/${classTable.tablePluralize}/${classTable.tablePluralize}.module.ts`, moduleT);
-            fs.writeFileSync(`${this.config.route}/${classTable.tablePluralize}/${classTable.tablePluralize}.controller.ts`, controller);
-            fs.writeFileSync(`${this.config.route}/${classTable.tablePluralize}/${classTable.tablePluralize}.service.ts`, service);
+            fs.writeFileSync(`${this.config.outputModelFile}/${classTable.tablePluralize}/${FOLDERS[NUMBER_FOLDER.DTO]}/${classTable.tablePluralize}.dto.ts`, dtos);
+            fs.writeFileSync(`${this.config.outputModelFile}/${classTable.tablePluralize}/${classTable.tablePluralize}.module.ts`, moduleT);
+            fs.writeFileSync(`${this.config.outputModelFile}/${classTable.tablePluralize}/${classTable.tablePluralize}.controller.ts`, controller);
+            fs.writeFileSync(`${this.config.outputModelFile}/${classTable.tablePluralize}/${classTable.tablePluralize}.service.ts`, service);
             
         })
         return true
     }
     async createFolder(classTable){
         await FOLDERS.forEach(async (folder)=>{
-            if (!fs.existsSync(`${this.config.route}/${classTable.tablePluralize}/${folder}`)){
-                await fs.mkdirSync(`${this.config.route}/${classTable.tablePluralize}/${folder}`, { recursive: true });
+            if (!fs.existsSync(`${this.config.outputModelFile}/${classTable.tablePluralize}/${folder}`)){
+                await fs.mkdirSync(`${this.config.outputModelFile}/${classTable.tablePluralize}/${folder}`, { recursive: true });
             }
         })
         return true
@@ -86,16 +86,16 @@ class TemplateNestSequelize {
         let databaseInitial = await Mustache.render(templateDatabaseInitial, {tables:classModelNames.classes});
         let databaseModels = await Mustache.render(templateDatabaseModels, {tables:classModelNames.classes});
         let databaseModule = await Mustache.render(templateDatabaseModule, {tables:classModelNames.classes});
-        if (!fs.existsSync(`${this.config.route}/../database`)){
-            await fs.mkdirSync(`${this.config.route}/../database`, { recursive: true });
+        if (!fs.existsSync(`${this.config.outputModelFile}/../database`)){
+            await fs.mkdirSync(`${this.config.outputModelFile}/../database`, { recursive: true });
         }
-        fs.writeFileSync(`${this.config.route}/../app.module.ts`, moduleApp);
-        fs.writeFileSync(`${this.config.route}/../main.ts`, moduleMain);
-        fs.writeFileSync(`${this.config.route}/../database/modules.providers.ts`, databaseProvider);
-        fs.writeFileSync(`${this.config.route}/../database/sequalize.constants.ts`, databaseContants);
-        fs.writeFileSync(`${this.config.route}/../database/database.providers.ts`, databaseInitial);
-        fs.writeFileSync(`${this.config.route}/../database/database.models.ts`, databaseModels);
-        fs.writeFileSync(`${this.config.route}/../database/database.module.ts`, databaseModule);
+        fs.writeFileSync(`${this.config.outputModelFile}/../app.module.ts`, moduleApp);
+        fs.writeFileSync(`${this.config.outputModelFile}/../main.ts`, moduleMain);
+        fs.writeFileSync(`${this.config.outputModelFile}/../database/modules.providers.ts`, databaseProvider);
+        fs.writeFileSync(`${this.config.outputModelFile}/../database/sequalize.constants.ts`, databaseContants);
+        fs.writeFileSync(`${this.config.outputModelFile}/../database/database.providers.ts`, databaseInitial);
+        fs.writeFileSync(`${this.config.outputModelFile}/../database/database.models.ts`, databaseModels);
+        fs.writeFileSync(`${this.config.outputModelFile}/../database/database.module.ts`, databaseModule);
     }
   }
 

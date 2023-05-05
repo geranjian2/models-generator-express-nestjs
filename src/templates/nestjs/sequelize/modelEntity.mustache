@@ -1,0 +1,118 @@
+import {
+  BelongsTo,
+  Column,
+  CreatedAt,
+  DataType,
+  DeletedAt,
+  ForeignKey,
+  Model,
+  Table,
+  UpdatedAt,
+  HasMany,
+  {{#authGenerate}}BeforeUpdate{{/authGenerate}}
+} from 'sequelize-typescript';
+{{#authGenerate}}import * as bcrypt from 'bcryptjs'{{/authGenerate}}
+
+
+{{#foreignsRelations}}
+{{&routeEntity}}
+{{/foreignsRelations}}
+
+{{#relations}}
+{{&routeEntity}}
+{{/relations}}
+
+
+
+@Table({ modelName: '{{nameTable}}' })
+export class {{tableEntity}} extends Model<{{tableEntity}}> {
+    {{#properties}}
+         {{#primary}}
+         {{#foreign}}
+          @ForeignKey(() => {{tableForeign}})
+          @Column
+          {{nameCamelCase}}: {{type}};
+         {{/foreign}}
+         {{/primary}}
+        {{!is not primary }}
+        {{^primary}}
+        {{!is foreign }}
+         {{#foreign}}
+          @ForeignKey(() => {{tableForeign}})
+          @Column
+          {{nameCamelCase}}: {{type}};
+         {{/foreign}}
+         {{!is not foreign }}
+         {{^foreign}}
+         {{!is created_at }}
+         {{#created_at}}
+          @CreatedAt
+          @Column
+         {{/created_at}}
+         {{!is updated_at }}
+         {{#updated_at}}
+          @UpdatedAt
+          @Column
+         {{/updated_at}}
+         {{!is deleted_at }}
+         {{#deleted_at}}
+          @DeletedAt
+          @Column
+         {{/deleted_at}}
+         {{!is string }}
+         {{#isTypeString}}
+         @Column({
+            type: DataType.STRING({{length}}),
+            allowNull: {{is_nullable}},
+         })
+         {{/isTypeString}}
+         {{!is text }}
+         {{#isTypeText}}
+         @Column({
+            type: DataType.TEXT,
+            allowNull: {{is_nullable}},
+         })
+         {{/isTypeText}}
+         {{!is integer }}
+         {{#isTypeInteger}}
+         @Column({
+            type: DataType.INTEGER,
+            allowNull: {{is_nullable}},
+         })
+         {{/isTypeInteger}}
+         {{#isTypeBoolean}}
+         @Column({
+            type: DataType.BOOLEAN,
+            allowNull: {{is_nullable}},
+         })
+         {{/isTypeBoolean}}
+          {{nameCamelCase}}: {{#isEnum}}{{&enumOr}}{{/isEnum}}{{^isEnum}}{{type}}{{/isEnum}};
+          
+         {{/foreign}}
+        {{/primary}}
+        
+
+    {{/properties}}
+    {{#properties}}
+    {{#authGenerate}}
+            @BeforeUpdate
+            static hashPasswordBeforeUpdate(team: {{tableEntity}}) {
+               if (team.dataValues.{{nameCamelCase}}) {
+                  team.dataValues.{{nameCamelCase}} = bcrypt.hashSync(team.dataValues.{{nameCamelCase}}, 10)
+               }
+            }
+
+            async comparePassword(pass: string): Promise<boolean> {
+               return await bcrypt.compare(pass, this.{{nameCamelCase}});
+            }
+         {{/authGenerate}}
+      {{/properties}}
+    {{#relations}}
+         @BelongsTo(() => {{tableEntity}})
+         {{tableCamelCase}}: {{tableEntity}};
+    {{/relations}}
+    {{#foreignsRelations}}
+         @HasMany(() => {{tableEntity}})
+         {{tableCamelPluralize}}?: {{tableEntity}}[];
+    {{/foreignsRelations}}
+}

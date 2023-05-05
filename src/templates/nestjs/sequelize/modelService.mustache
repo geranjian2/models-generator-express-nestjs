@@ -5,19 +5,18 @@ import {
   Injectable,
   Res,
 } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { REPOSITORIES } from 'src/database/sequalize.constants';
 {{&routeDto}}
 {{&routeEntityDirect}}
 
   @Injectable()
   export class {{tableClassService}} {
     constructor(
-    @InjectRepository({{tableEntity}})
-    private readonly {{tableClassrepository}}: Repository<{{tableEntity}}>,
+    @Inject(REPOSITORIES.{{tableUppercase}})
+    private readonly {{tableClassrepository}}: typeof {{tableEntity}},
   ) {}
     async findAll() {
-      const _{{tableCamelCase}} = await this.{{tableClassrepository}}.find();
+      const _{{tableCamelCase}} = await this.{{tableClassrepository}}.findAll<any>();
       return _{{tableCamelCase}}.map({{tableInitial}} => new {{tableModelDto}}({{tableInitial}}));
     }
   };
