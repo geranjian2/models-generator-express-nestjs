@@ -1,0 +1,32 @@
+import * as path from 'path'
+import * as dotenv from 'dotenv'
+import { Logger } from '@nestjs/common'
+import { join } from 'path'
+const logger = new Logger('Config')
+const env = process.env.NODE_ENV || 'dev'
+const dotenv_path = path.resolve(process.cwd(), `.env`)
+const result = dotenv.config({ path: dotenv_path })
+if (result.error) {
+  /* do nothing */
+}
+let DatabaseConfig
+try {
+  DatabaseConfig = {
+    type: process.env.TYPE_CONNECTION as any,
+    host: process.env.DATABASE_HOST,
+    port: parseInt(process.env.DATABASE_PORT),
+    username: process.env.DATABASE_USER,
+    database: process.env.DATABASE,
+    password: process.env.DATABASE_PASSWORD,
+    synchronize: false,
+    migrationsRun: true,
+    entities: [join(__dirname, './**/**/entity/*.ts')],
+    migrations: [join(__dirname, './**/migrations/typeorm/*.ts')],
+    autoLoadEntities: true,
+    migrationsTableName: 'migrations',
+    logging: process.env.NODE_ENV === 'development',
+  }
+} catch (error) {
+  logger.log(error)
+}
+export default DatabaseConfig

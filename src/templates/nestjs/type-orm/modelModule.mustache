@@ -1,10 +1,11 @@
 import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm'
 {{&routeControllerDirect}}
 {{&routeServiceDirect}}
-
+{{&routeEntityDirect}}
 @Module({
+  imports: [TypeOrmModule.forFeature([{{tableEntity}}])],
   controllers: [{{tableClassController}}],
   providers: [{{tableClassService}}],
-  imports: [],
 })
 export class {{tableClassModule}} {}

@@ -46,6 +46,15 @@ const pluralizeReplace = (word,replace) => {
         return pluralizeWord
 }
 
+const transformText = (data, literal) =>{
+    let dataArray = data.split(literal)
+    let textnew=''
+    dataArray.forEach(element => {  
+        textnew += `'${element.trim()}'${literal}`
+    });
+    return textnew.slice(0, -1);
+} 
+
     module.exports = {
         getInitials,
         singularize,
@@ -54,5 +63,6 @@ const pluralizeReplace = (word,replace) => {
         middleDash,
         addSpace,
         pluralizeReplace,
-        replace
+        replace,
+        transformText
     }

@@ -1,18 +1,37 @@
 var PrettyError = require('pretty-error');
 const Knex = require('knex');
-const pgAdmin = async (dbName, dbConnection)=>{
+const { transformText } = require('../utils/format-text');
+const pgAdmin = async (dbName, dbConnection, config)=>{
     try {
-        
         const knex = Knex({
             client: 'pg',
             connection: {...dbConnection, database: dbName }
         });
-    
+        
+        let addNotTables = ''
+        let addSpecificTables = ''
+        let quearyAdd = ''
+        if(config['tables']['exclude']){
+            let excluede = config['tables']['exclude']
+            let tables = transformText(excluede,',')
+            addNotTables = `,${tables}`
+        }
+        if(config['tables']['include']){
+            let include = config['tables']['include']
+            let tables = transformText(include,',')
+            quearyAdd= ` AND tb.table_name in (${tables})`
+        }
+        
+
+        tablesNotIn=`'sequelize_migrations', 'sequelize_data', 'migrations' ${addNotTables}`
+
         const tables = await knex.raw(`SELECT tb.table_name 
         FROM information_schema.tables tb
         WHERE tb.table_schema = 'public'
+        AND tb.table_name not in (${tablesNotIn})
+        ${quearyAdd}
         ORDER BY tb.table_name`)
-    
+        
         const columns = await knex.raw(`SELECT 
         cl.table_name, cl.column_name,
          cl.data_type, cl.is_nullable,
@@ -54,6 +73,37 @@ const pgAdmin = async (dbName, dbConnection)=>{
         WHERE tb.table_schema = 'public'
         and c.column_default is not null
         ORDER BY tb.table_name)`);
+
+        const enums = await knex.raw(`select
+        col.table_schema,
+        col.table_name,
+        col.column_name,
+        string_agg(concat('"',enu.enumlabel,'"'), ', ' 
+                  order by enu.enumsortorder) as enum_values,
+        string_agg(concat('"',enu.enumlabel,'"'), ' | '  
+                  order by enu.enumsortorder) as enum_values_or
+    from
+        information_schema.columns col
+    join information_schema.tables tab on
+        tab.table_schema = col.table_schema
+        and tab.table_name = col.table_name
+        and tab.table_type = 'BASE TABLE'
+    join pg_type typ on
+        col.udt_name = typ.typname
+    join pg_enum enu on
+        typ.oid = enu.enumtypid
+    where
+        col.table_schema not in ('information_schema', 'pg_catalog')
+        and typ.typtype = 'e'
+    group by
+        col.table_schema,
+        col.table_name,
+        col.ordinal_position,
+        col.column_name,
+        col.udt_name
+    order by
+        col.table_name,
+        col.ordinal_position;`)
     
         
         const arrayTables = {
@@ -63,14 +113,27 @@ const pgAdmin = async (dbName, dbConnection)=>{
         tables.rows.forEach((table, index) => {
             arrayTables['tables'][index]=({table:table.table_name, columns:[], foreigns:[],foreignsRelations:[], ids:[]})
             columns.rows.forEach((column) => {
+                enumColumn='';
+                enum_or=''
                 if(arrayTables['tables'][index]['table']===column.table_name){
+                    column.type_initial = column.data_type
                     column.data_type = (column.data_type === 'uuid' || column.data_type === 'character varying')?'varchar':column.data_type
-    
                     
+                    if(column.type_initial==='USER-DEFINED'){
+                        column.type_initial='enum'
+                    }
                     if(column.column_name==='uuid'){
                         column.character_maximum_length=20
                     }
-                    
+                    enums.rows.forEach((enumInfo, index4) => {
+                        if(column.column_name===enumInfo.column_name){
+                            
+                            enumColumn=enumInfo.enum_values,
+                            enum_or=enumInfo.enum_values_or
+                        }
+                    });
+                    column['enum']=enumColumn
+                    column['enum_or']=enum_or
                     arrayTables['tables'][index]['columns'].push(column)
                 }
             });
@@ -93,8 +156,8 @@ const pgAdmin = async (dbName, dbConnection)=>{
                     arrayTables['tables'][index]['ids'].push(foreing.column_name)
                 }
             });
+           
         });
-    
         return arrayTables;
     } catch (error) {
         let pe = new PrettyError();
