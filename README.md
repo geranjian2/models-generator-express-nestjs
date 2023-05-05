@@ -88,14 +88,14 @@ const main = async () => {
 npm run generator
 ```
 
-##  json Config paramters Description
-# database
+##  json config paramters description
+### database
   - Select database mysql or postgress 
-# orm
+### orm
   - Select orm sequelize or typeorm 
-# configMigrations true | false
+### configMigrations true | false
   - configure in the json package the necessary commands to run migrations
-# installPackage true | false
+### installPackage true | false
   -Depending on the orm you select, it will install the corresponding packages
 
     #package typeorm
@@ -108,38 +108,38 @@ npm run generator
       -sequelize-typescript
       -@nestjs/sequelize
 
-# outputModelFile
+### outputModelFile
   - path where the modules will be created
 
-# tables
+### tables
   - configuration to exclude or include tables in the generation of modules
-  # exclude
+  ### exclude
     -tables not included
-  # include
+  ### include
     -tables that only include
 
-# auth
+### auth
   - We can generate a login from a table and its respective field of username and password
-  # generate true | false
+  ### generate true | false
     -validate if we are going to generate the auth module
-  # table
+  ### table
     -name of the table where the auth module will be generated
-  # fields
+  ### fields
     - username and password fields for login
-    # user
-    # password
+    ### user
+    ### password
 
-# generatorForModule
-  # dto true | false
-  # models true | false
-  # entitie true | false
-  # interface true | false
-  # module true | false
-  # controller true | false
-  # rest true | false
-  # service true | false
+### generatorForModule
+  ### dto true | false
+  ### models true | false
+  ### entitie true | false
+  ### interface true | false
+  ### module true | false
+  ### controller true | false
+  ### rest true | false
+  ### service true | false
 
-# deleteAlways true | false
+### deleteAlways true | false
   - 📢 important this parameter should only be in tru only in the initial part of the generator then it should be left in false, it already eliminates the folders
 
 Example modules generators sequelize
