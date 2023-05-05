@@ -1,0 +1,38 @@
+
+{{#foreignsRelations}}
+{{&routeModel}}
+{{/foreignsRelations}}
+
+{{#relations}}
+{{&routeModel}}
+{{/relations}}
+
+  export class {{tableClassModel}} {
+    {{#properties}}
+    {{nameCamelCase}}?:{{#isEnum}}{{&enumOr}}{{/isEnum}}{{^isEnum}}{{type}}{{/isEnum}}
+    {{/properties}}
+    {{#foreignsRelations}}
+    {{tableCamelPluralize}}?: {{tableClassModel}}[];
+    {{/foreignsRelations}}
+    {{#relations}}
+    {{tableCamelCase}}: {{tableClassModel}};
+    {{/relations}}
+    constructor(
+      {
+        {{#properties}}
+        {{nameCamelCase}},
+        {{/properties}}
+      }:{
+        {{#properties}}
+        {{nameCamelCase}}?:{{#isEnum}}{{&enumOr}}{{/isEnum}}{{^isEnum}}{{type}}{{/isEnum}},
+        {{/properties}}
+      }
+    ){
+       {{#properties}}
+        this.{{nameCamelCase}}={{nameCamelCase}}
+      {{/properties}}
+    }
+};
+
+
+

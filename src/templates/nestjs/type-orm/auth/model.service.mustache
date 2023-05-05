@@ -1,0 +1,38 @@
+import { Injectable } from "@nestjs/common";
+import { Repository } from "typeorm";
+import { JwtService } from '@nestjs/jwt';
+import { InjectRepository } from "@nestjs/typeorm";
+
+{{&routeEntityTable}}
+@Injectable()
+export class AuthService {
+    constructor(
+        private jwtService: JwtService,
+        @InjectRepository({{tableEntity}})
+    private readonly {{tableClassrepository}}: Repository<{{tableEntity}}>,
+    ){}
+    async findOne(id:any): Promise<any> {
+        const userRecord = await this.{{tableClassrepository}}.findOne(id) 
+        return userRecord
+    }
+    async validateUser(email:string, pass:string): Promise<any> {
+        const userRecord = await this.{{tableClassrepository}}.findOneBy({email})
+        if(userRecord){
+            const comparePassword = await userRecord.comparePassword(pass)
+            
+            if(userRecord &&  comparePassword){
+                return userRecord;
+            }
+        }
+        return null;
+    }
+
+    async login(userAuth:{{tableEntity}}){
+         const {id,{{passwordAuth}}, ...user} = userAuth;
+         const payload ={sub:id};
+         return { 
+            user,
+            accessToken:this.jwtService.sign(payload),
+         }
+    }
+}

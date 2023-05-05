@@ -1,0 +1,48 @@
+
+  import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+  {{#foreignsRelations}}
+  {{&routeModel}}
+  {{/foreignsRelations}}
+
+  {{#relations}}
+  {{&routeModel}}
+  {{/relations}}
+
+  {{&routeModel}}
+
+  export class {{tableModelDto}} {
+    constructor(
+      register: {{tableClassModel}}
+    ){
+       {{#properties}}
+        this.{{nameCamelCase}}=register.{{nameCamelCase}}
+      {{/properties}}
+      {{#relations}}
+        this.{{tableCamelCase}}= register.{{tableCamelCase}}
+      {{/relations}}
+      {{#foreignsRelations}}
+        this.{{tableCamelPluralize}} = register.{{tableCamelPluralize}}
+      {{/foreignsRelations}}
+    }
+  {{#properties}}
+    {{#primary}}
+      @ApiPropertyOptional()
+      {{nameCamelCase}}?: {{type}};
+    {{/primary}}
+    {{^primary}}
+      @ApiProperty()
+      {{nameCamelCase}}?:{{#isEnum}}{{&enumOr}}{{/isEnum}}{{^isEnum}}{{type}}{{/isEnum}};
+    {{/primary}}
+  {{/properties}}
+   {{#relations}}
+      @ApiProperty()
+      {{tableCamelCase}}: {{tableClassModel}};
+    {{/relations}}
+     {{#foreignsRelations}}
+      @ApiProperty()
+      {{tableCamelPluralize}}?: {{tableClassModel}}[];
+    {{/foreignsRelations}}
+};
+
+
+

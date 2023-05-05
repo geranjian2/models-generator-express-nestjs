@@ -18,9 +18,6 @@
 $ npm i  models-generator-express-nestjs
 ```
 
-> **Note**: Import!! This package is only for postgres, nestjs and sequalize for now
-
-
 ## Getting started
 
 Once the installation process is complete,  create file config in the root project for generate models 
@@ -41,6 +38,39 @@ const main = async () => {
       database: process.env.DATABASE || 'your_database'
     };
     const modelsPromise = await models(connection.database, connection,'./app/modules/');
+
+    const config = {
+    database:'mysql', //mysql | postgres 
+    orm: 'SEQUELIZE', // TYPEORM | SEQUELIZE,
+    configMigrations: true,
+    installPackage:true,
+    outputModelFile: '.app/modules/',
+    tables: {
+      exclude: '',
+      include: '',
+    },
+    auth:{
+      generate:true,
+      table: 'users',
+      fields:{
+        user:'email',
+        password:'password',
+      },
+      uninstallPackage:false
+    },
+    generatorForModule: {
+      dto: true,
+      models: true,
+      entitie: true,
+      interface: true,
+      module: true,
+      controller: true,
+      rest: true,
+      service: true,
+    },
+    deleteAlways:true
+  };
+
   
     const all = await Promise.all([modelsPromise]);
     process.exit();
@@ -58,8 +88,61 @@ const main = async () => {
 npm run generator
 ```
 
+##  json Config paramters Description
+# database
+  - Select database mysql or postgress 
+# orm
+  - Select orm sequelize or typeorm 
+# configMigrations true | false
+  - configure in the json package the necessary commands to run migrations
+# installPackage true | false
+  -Depending on the orm you select, it will install the corresponding packages
 
-Example modules generators
+    #package typeorm
+      -typeorm
+      -@nestjs/typeorm
+      -@nestjs/config
+
+    #package sequelize
+      -sequelize
+      -sequelize-typescript
+      -@nestjs/sequelize
+
+# outputModelFile
+  - path where the modules will be created
+
+# tables
+  - configuration to exclude or include tables in the generation of modules
+  # exclude
+    -tables not included
+  # include
+    -tables that only include
+
+# auth
+  - We can generate a login from a table and its respective field of username and password
+  # generate true | false
+    -validate if we are going to generate the auth module
+  # table
+    -name of the table where the auth module will be generated
+  # fields
+    - username and password fields for login
+    # user
+    # password
+
+# generatorForModule
+  # dto true | false
+  # models true | false
+  # entitie true | false
+  # interface true | false
+  # module true | false
+  # controller true | false
+  # rest true | false
+  # service true | false
+
+# deleteAlways true | false
+  - 📢 important this parameter should only be in tru only in the initial part of the generator then it should be left in false, it already eliminates the folders
+
+Example modules generators sequelize
 
 ```bash
 ├── ./app
@@ -67,8 +150,6 @@ Example modules generators
 │   └── app.module.ts
 │   ├── modules
 │   │   ├── users
-│   │   │   ├── controller
-│   │   │   │   ├── user.controller.ts
 │   │   │   ├── dtos
 │   │   │   │   ├── user.dto.ts
 │   │   │   ├── entities
@@ -77,24 +158,51 @@ Example modules generators
 │   │   │   │   ├── user.interface.ts
 │   │   │   ├── models
 │   │   │   │   ├── user.model.ts
-│   │   │   ├── module
-│   │   │   │   ├── user.module.ts
 │   │   │   ├── rest
 │   │   │   │   ├── user.json
-│   │   │   ├── services
-│   │   │   │   ├── user.service.ts
+│   │   │   ├── user.service.ts
+│   │   │   ├── user.module.ts
+│   │   │   ├── user.controller.ts
 │   ├── database
 │   │   ├── database.models.ts
 │   │   ├── database.module.ts
 │   │   ├── database.providers.ts
 │   │   ├── sequalize.constants.ts
 │   │   └── modules.providers.ts
+│   ├── sequelize
+│   │   ├── config
+│   │   │   ├── config.js
+│   │   ├── migrations
+│   │   └── seeders
 ```
 
 
-## Base Github nestjs sqlize 
+Example modules generators typeorm
 
 ```bash
-https://github.com/geranjian2/nestjs-base-sequelize
+├── ./app
+│   └── main.ts
+│   └── app.module.ts
+│   ├── modules
+│   │   ├── users
+│   │   │   ├── dtos
+│   │   │   │   ├── user.dto.ts
+│   │   │   ├── entities
+│   │   │   │   ├── user.entity.ts
+│   │   │   ├── interface
+│   │   │   │   ├── user.interface.ts
+│   │   │   ├── models
+│   │   │   │   ├── user.model.ts
+│   │   │   ├── rest
+│   │   │   │   ├── user.json
+│   │   │   ├── user.service.ts
+│   │   │   ├── user.module.ts
+│   │   │   └── user.controller.ts
+│   ├── config
+│   │   ├── config.typeorm.module.ts
+│   │   ├── database.typeorm.config.ts
+│   │   └── migrations.typeorm.config.ts
+│   ├── typeorm
+│   │   └── migrations
 ```
 

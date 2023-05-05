@@ -1,4 +1,5 @@
 node_modules/
 modules/
+database/
 .app/
 main.js

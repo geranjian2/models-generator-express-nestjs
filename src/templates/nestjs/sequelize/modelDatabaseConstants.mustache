@@ -1,0 +1,11 @@
+{{#config}}
+export const SEQUELIZE_DIALECT = '{{database}}';
+{{/config}}
+export const SEQUELIZE_PROVIDER = 'Sequelize';
+export const SEQUELIZE_OPERATORS_PROVIDER = 'SequelizeOperators';
+
+export const REPOSITORIES = {
+   {{#tables}}
+        {{tableUppercase}}: '{{tableUppercase}}_REPOSITORY',
+  {{/tables}}
+}
