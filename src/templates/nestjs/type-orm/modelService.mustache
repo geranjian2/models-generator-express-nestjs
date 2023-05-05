@@ -5,18 +5,17 @@ import {
   Injectable,
   Res,
 } from '@nestjs/common';
-import { REPOSITORIES } from 'src/database/sequalize.constants';
 {{&routeDto}}
 {{&routeEntityDirect}}
 
   @Injectable()
   export class {{tableClassService}} {
     constructor(
-    @Inject(REPOSITORIES.{{tableUppercase}})
+    @InjectRepository({{tableEntity}})
     private readonly {{tableClassrepository}}: typeof {{tableEntity}},
   ) {}
     async findAll() {
-      const _{{tableCamelCase}} = await this.{{tableClassrepository}}.findAll<any>();
+      const _{{tableCamelCase}} = await this.{{tableClassrepository}}.find<any>();
       return _{{tableCamelCase}}.map({{tableInitial}} => new {{tableModelDto}}({{tableInitial}}));
     }
   };

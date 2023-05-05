@@ -1,17 +1,18 @@
 import { Module } from '@nestjs/common';
-import { DatabaseModule } from './database/database.module';
+import { ConfigTypeormModule } from './config/config.typeorm.module'
 
 
 {{#tables}}
-{{&routeModule}}
+{{&routeModuleDirect}}
 {{/tables}}
 
 
 @Module({
-  imports: [DatabaseModule,
+  imports: [
+   ConfigTypeormModule,
    {{#tables}}
-        {{tableClassModule}},
-    {{/tables}}
+   {{tableClassModule}},
+   {{/tables}}
    ],
   controllers: [],
   providers: [],

@@ -1,0 +1,8 @@
+import { DataSource } from 'typeorm'
+import DatabaseConfig from './database.typeorm.config'
+
+let source
+try {
+  source = new DataSource(DatabaseConfig)
+} catch (error) {}
+export default source

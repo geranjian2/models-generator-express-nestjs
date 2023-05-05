@@ -1,0 +1,46 @@
+import {
+  Column,
+  Entity,
+  Index,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+
+{{#foreignsRelations}}
+{{&routeEntity}}
+{{/foreignsRelations}}
+
+{{#relations}}
+{{&routeEntity}}
+{{/relations}}
+
+
+@Entity('{{nameTable}}', { schema: "public" })
+export class {{tableEntity}} {
+    {{#properties}}
+        {{#primary}}
+         @PrimaryGeneratedColumn()
+         {{nameCamelCase}}: {{type}};
+        {{/primary}}
+        {{^primary}}
+          
+          @Column(
+            '{{type_initial}}',
+             { name: '{{name}}',{{#isEnum}}enum: [{{&enumArray}}],{{/isEnum}} {{#is_nullable}}nullable: {{is_nullable}},{{/is_nullable}}{{#length}}length: {{length}}{{/length}}
+             })
+          {{nameCamelCase}}: {{#isEnum}}{{&enumOr}}{{/isEnum}}{{^isEnum}}{{type}}{{/isEnum}};
+          
+        {{/primary}}
+    {{/properties}}
+    {{#relations}}
+         @ManyToOne(() => {{tableEntity}}, ({{tableCamelPluralize}}) => {{tableCamelPluralize}}.{{name}})
+         @JoinColumn([{ name: '{{column_name}}', referencedColumnName: '{{foreing_column_name}}' }])
+         {{tableCamelCase}}: {{tableEntity}}
+    {{/relations}}
+    {{#foreignsRelations}}
+         @OneToMany(() => {{tableEntity}}, ({{tableCamelPluralize}}) => {{tableCamelPluralize}}.{{foreignTableCamelPluralize}})
+         {{tableCamelPluralize}}: {{tableEntity}}[]
+    {{/foreignsRelations}}
+}
