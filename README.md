@@ -10,6 +10,12 @@
 - Support for nestjs and express ts
 - Generate models, interface, entities, dto from your database postgres
 
+## package install
+
+  ```bash
+    $ npm i  @nestjs/swagger dotenv
+  ```
+
 
 ## Installation
 
@@ -37,7 +43,6 @@ const main = async () => {
       password: process.env.DATABASE_PASSWORD || 'pass_db',
       database: process.env.DATABASE || 'your_database'
     };
-    const modelsPromise = await models(connection.database, connection,'./app/modules/');
 
     const config = {
     database:'mysql', //mysql | postgres 
@@ -71,7 +76,7 @@ const main = async () => {
     deleteAlways:true
   };
 
-  
+    const modelsPromise = await models(connection.database, connection, config);
     const all = await Promise.all([modelsPromise]);
     process.exit();
 }
@@ -142,6 +147,8 @@ npm run generator
 ### deleteAlways true | false
   - 📢 important this parameter should only be in tru only in the initial part of the generator then it should be left in false, it already eliminates the folders
 
+
+
 Example modules generators sequelize
 
 ```bash
@@ -206,3 +213,19 @@ Example modules generators typeorm
 │   │   └── migrations
 ```
 
+## configure file .env 
+ -TYPE_CONNECTION=mysql
+ -DATABASE_PORT=3306
+ -DATABASE_HOST=localhost
+ -DATABASE_USER=root
+ -DATABASE_PASSWORD=admin
+ -DATABASE=payment_backoffice
+
+### generate orm is sequelize, add variables
+ -DATABASE_DIALECT=mysql
+ -DATABASE_SCHEMA=public
+ -DATABASE_LOGGING=true
+ -NODE_ENV=development
+
+ ### generate auth is true, add variable
+ -JWT_SECRET='dep2023'
