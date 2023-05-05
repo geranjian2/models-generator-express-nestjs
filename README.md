@@ -213,19 +213,24 @@ Example modules generators typeorm
 │   │   └── migrations
 ```
 
-## configure file .env 
- -TYPE_CONNECTION=mysql
- -DATABASE_PORT=3306
- -DATABASE_HOST=localhost
- -DATABASE_USER=root
- -DATABASE_PASSWORD=admin
- -DATABASE=payment_backoffice
 
-### generate orm is sequelize, add variables
- -DATABASE_DIALECT=mysql
- -DATABASE_SCHEMA=public
- -DATABASE_LOGGING=true
- -NODE_ENV=development
 
- ### generate auth is true, add variable
- -JWT_SECRET='dep2023'
+### File configuration .env
+
+```javascript
+ TYPE_CONNECTION=mysql
+ DATABASE_PORT=3306
+ DATABASE_HOST=localhost
+ DATABASE_USER=root
+ DATABASE_PASSWORD=admin
+ DATABASE=payment_backoffice
+
+# generate orm is sequelize, add variables
+ DATABASE_DIALECT=mysql
+ DATABASE_SCHEMA=public
+ DATABASE_LOGGING=true
+ NODE_ENV=development
+
+ #generate auth is true, add variable
+ JWT_SECRET='mysecret'
+ ```
